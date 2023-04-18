@@ -19,7 +19,7 @@
 // Add your JavaScript code for WebSocket communication
     const roomName = "{{ room.name }}";
     const chatSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+        'wss://' + window.location.host + '/ws/chat/' + roomName + '/'
     );
 
     console.log(chatSocket)
