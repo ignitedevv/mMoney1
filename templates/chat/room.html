@@ -29,6 +29,17 @@
     const localPeerConnection = new RTCPeerConnection(configuration);
     const isInitiator = location.hash === "#init";
 
+    localPeerConnection.oniceconnectionstatechange = function() {
+      console.log('ICE connection state changed:', localPeerConnection.iceConnectionState);
+    };
+
+    localPeerConnection.onsignalingstatechange = function() {
+      console.log('Signaling state changed:', localPeerConnection.signalingState);
+    };
+
+
+
+
     localPeerConnection.onicecandidate = function(event) {
       if (event.candidate) {
         chatSocket.send(JSON.stringify({
@@ -39,6 +50,7 @@
 
     localPeerConnection.ontrack = function(event) {
       remoteVideo.srcObject = event.streams[0];
+      console.log(remoteVideo)
     };
 
     async function init() {
