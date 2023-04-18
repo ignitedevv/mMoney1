@@ -1,0 +1,33 @@
+{% extends 'MainWebsite/base.html' %}
+
+{% block content %}
+<div class="section wf-section">
+    <div class="w-row">
+      <div class="w-col w-col-6">
+        <h1 class="register-text large">Spend less time filling out<br>forms and more time<br>optimizing performance.</h1>
+        <h1 class="register-text medium">Spend less time filling out forms and more time<br>optimizing performance.</h1>
+      </div>
+      <div class="column-3 w-col w-col-6">
+        <div class="div-block-5">
+          <div class="div-block-6">
+            <h1 class="heading-5">Get Started Today!</h1>
+            <div class="form-block-2 w-form">
+              <form id="email-form" name="email-form" data-name="Email Form" method="Post" class="form-2">
+                  {% csrf_token %}
+                  <input type="text" class="input-field w-input" maxlength="256" name="first" data-name="Name" placeholder="First Name" id="name">
+                  <input type="text" class="input-field w-input" maxlength="256" name="last" data-name="Email" placeholder="Last Name" id="email" required="">
+                  <input type="text" class="input-field w-input" maxlength="256" name="email" data-name="Email 2" placeholder="Email" id="email-2" required="">
+                  <input type="password" class="input-field w-input" maxlength="256" name="password" data-name="Email 2" placeholder="Password" id="email-2" required="">
+                  <input type="password" class="input-field w-input" maxlength="256" name="password2" data-name="Email 2" placeholder="Confirm Password" id="email-2" required="">
+                  <input type="submit" value="Submit" data-wait="Please wait..." class="submit-button" style="color: white;">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

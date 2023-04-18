@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'MainWebsite/normalize.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'MainWebsite/mmoney.webflow.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'MainWebsite/webflow.css' %}" rel="stylesheet" type="text/css">
+
+
+
+</head>
+<body class="body-4">
+<div class="nav-bar">
+    <div class="left-nav"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="60" alt="" class="image-2">
+      <div class="nav-links-wrapper">
+        <a href="{% url 'MainWebsite:home' %}"><h1 class="nav-bar-text">Home</h1></a>
+        <h1 class="nav-bar-text">About</h1>
+      </div>
+    </div>
+    <div class="right-nav">
+      <a href="{% url 'MainWebsite:register' %}" class="button">Get Started</a>
+    </div>
+</div>
+{% block content %}
+
+{% endblock %}
+</body>
+</html>

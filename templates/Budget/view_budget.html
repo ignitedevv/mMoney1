@@ -1,0 +1,145 @@
+{% extends 'budget/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<body class="body">
+  <div class="full-page-wrapper">
+    <div class="section-container">
+      <div class="page-title-blue">
+        <h1 class="heading-4">Budget - <span>{{ student_budget.title }}</span></h1>
+      </div>
+        <div class="delete-popup" id="delete-popup" style="display: none;">
+    <div class="_60-padding vertical">
+      <div class="_24px">
+        <h1 class="_24px">Are you sure you want to delete <span style="font-weight: bold">{{ student_budget.title }}</span>?</h1>
+      </div>
+      <div class="confirm-delete">
+        <button type="button" class="back-btn" onclick="hideDeletePopup()">Cancel</button>
+        <a href="{% url 'Budget:delete-budget' student_budget.budget_id %}" class="next-btn">Confirm</a>
+      </div>
+    </div>
+  </div>
+    </div>
+    <div class="page-divider-container">
+      <div class="page-divider w-row">
+        <div class="page-left-column w-col w-col-4" style="padding: 0px">
+          <div class="account-overview-container left">
+            <div class="section-header-wrapper">
+              <h1 class="page-section-header">Overview</h1>
+            </div>
+            <div class="_20-padding-container">
+              <div class="pop-up-form-wrapper">
+                    <div class="trashWrapper" style="display: flex;" id="trash-can" >
+                        <img class="trashCan" src="{% static 'images/icons/trash-can-red.png' %}" loading="lazy" alt="" onclick="deleteBudgetPopup()">
+                    </div>
+                  <div class="w-form">
+                  <form id="wf-form-add-goal" name="wf-form-add-goal" data-name="add goal" method="post" class="add-budget-form">
+                      {% csrf_token %}
+                    <label style="font-weight: 500; font-family: 'Poppins', sans-serif; color: #142450; font-size: 14px">Budget Title</label>
+                      <input type="text" class="input budget w-input" maxlength="256" name="budget-title" data-name="Name" placeholder="Title" id="name" value="{{ student_budget.title }}">
+                    <label style="font-weight: 500; font-family: 'Poppins', sans-serif; color: #142450; font-size: 14px">Max Per Month</label>
+                      <input type="number" class="input budget w-input" maxlength="256" name="Max-amount" data-name="Max amount" placeholder="Max Amount" id="Max-amount" required="" value="{{ student_budget.total_per_month }}">
+                    <label style="font-weight: 500; font-family: 'Poppins', sans-serif; color: #142450; font-size: 14px">Type</label>
+                      <select id="Category" name="Category" data-name="Category" class="select-field-2 w-select" style="background-color: white">
+                      <option value="{{ student_budget.category }}" style="background-color: white">{{ student_budget.category }}</option>
+
+                      {% for category in budget_categories %}
+                            {% if category.1 != student_budget.category %}
+                                <option value="{{ category.1 }}">{{ category.1 }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <div class="color-selector" style="display: none;"><label class="color-button w-radio"><input type="radio" id="Red" name="Color-Select" value="Red" data-name="Color Select" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="Red">Radio</span></label><label class="color-button w-radio"><input type="radio" id="Red" name="Color-Select" value="Red" data-name="Color Select" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="Red">Radio</span></label><label class="color-button w-radio"><input type="radio" id="Red" name="Color-Select" value="Red" data-name="Color Select" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="Red">Radio</span></label><label class="color-button w-radio"><input type="radio" id="Red" name="Color-Select" value="Red" data-name="Color Select" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="Red">Radio</span></label><label class="color-button w-radio"><input type="radio" id="Red" name="Color-Select" value="Red" data-name="Color Select" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="Red">Radio</span></label><label class="w-radio"><input type="radio" id="Red" name="Color-Select" value="Red" data-name="Color Select" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="Red">Radio</span></label></div>
+                    <div class="save-back-wrapper no-padding" style="padding-top: 20px">
+                      <a href="{% url 'Budget:budget-budget' %}" class="back-btn" style="text-decoration: none; align-items: center; align-content: center">Back</a>
+                        <input type="submit" value="Change" data-wait="Please wait..." class="next-btn">
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column w-col w-col-8" style="padding: 0px">
+          <div class="account-overview-container right">
+            <div class="section-warpper">
+              <div class="section-header-wrapper">
+                <h1 class="page-section-header"><span>Transactions in</span> {{ student_budget.title }}</h1>
+
+              </div>
+              <div class="_20-padding-container budget-container vertical" style="">
+                <div class="transaction-breakdown-header">
+                  <div class="w-layout-grid grid-5">
+                    <div id="w-node-_0812455f-164a-9896-0de4-f10f1f191733-915e969f" class="breakdown-category">
+                      <div class="text-block-4">Transaction</div>
+                    </div>
+                    <div id="w-node-_9a7336d8-d712-68dd-c9c9-023966549c0e-915e969f" class="breakdown-category">
+                      <div class="text-block-4 middle">Account</div>
+                    </div>
+                    <div id="w-node-_19a8cb79-9f85-397e-2183-ce8dfdbcaf08-915e969f" class="breakdown-category">
+                      <div class="text-block-4 middle">Date</div>
+                    </div>
+                    <div id="w-node-_20690caa-b2e3-6539-b882-3905c0e86399-915e969f" class="breakdown-category">
+                      <div class="text-block-4 right">Amount</div>
+                    </div>
+                  </div>
+                </div>
+
+                  {% for transaction in budget_purchases.categoryTransactions %}
+                  <div class="transactions">
+                  <div class="w-layout-grid grid-5">
+                    <div id="w-node-_9bbef277-3bcb-449a-99b3-24993b230e30-915e969f" class="transaction-breakdown">
+                      <div>{{ transaction.name }}</div>
+                    </div>
+                    <div id="w-node-_9bbef277-3bcb-449a-99b3-24993b230e33-915e969f" class="breakdown-category middle">
+                      <div>*Account*</div>
+                    </div>
+                    <div id="w-node-_9bbef277-3bcb-449a-99b3-24993b230e36-915e969f" class="breakdown-category middle">
+                      <div>{{ transaction.date }}</div>
+                    </div>
+                    <div id="w-node-_9bbef277-3bcb-449a-99b3-24993b230e39-915e969f" class="breakdown-category right">
+                      <div>$<span>{{ transaction.amount }}</span></div>
+                    </div>
+                  </div>
+                </div>
+                  {% endfor %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+
+
+
+<script>
+
+
+function deleteBudgetPopup(){
+    var deletePopup = document.getElementById('delete-popup');
+    if(deletePopup.style.display === 'none') {
+        deletePopup.style.display = 'flex'
+    }
+}
+
+function hideDeletePopup() {
+    var deletePopup = document.getElementById('delete-popup');
+    deletePopup.style.display = 'none'
+}
+
+
+
+</script>
+
+
+
+
+{% endblock %}

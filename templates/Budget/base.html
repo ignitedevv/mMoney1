@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'budget/css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'budget/css/webflow.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'budget/css/other.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'MainWebsite/normalize.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'MainWebsite/webflow.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'MainWebsite/mmoney.webflow.css' %}" rel="stylesheet" type="text/css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+    {% block headers %}
+
+    {% endblock %}
+
+</head>
+<body class="body">
+  <div class="bud-navbar-container wf-section">
+    <div class="bud-navbar-wrapper"><img src="{% static 'images/Nav-bar-Hamburger@2x.png' %}" loading="lazy" width="30" alt="" onclick="navbarOpen()">
+      <div>
+        <h1 class="heading-3">Jake</h1>
+      </div>
+    </div>
+  </div>
+
+
+<body class="body">
+  <div class="everything-col w-row" style="display: none;" id="navbar-overlay">
+    <div id="left-nav-container" class="nav-col-left w-col w-col-2">
+      <div class="nav-img-container"><img src="{% static 'images/Prosperon-Logo-white-p-1080.png' %}" loading="lazy" width="180" sizes="(max-width: 767px) 180px, 17vw" srcset="{% static 'images/Prosperon-Logo-white-p-1080.png' %} 500w, {% static 'images/Prosperon-Logo-white-p-1080.png' %} 800w, {% static 'images/Prosperon-Logo-white-p-1080.png' %} 1080w, images/{% static 'images/Prosperon-Logo-white-p-1080.png' %} 1600w, {% static 'images/Prosperon-Logo-white-p-1080.png' %} 1783w" alt=""></div>
+        <div class="nav-links-container">
+
+        <a href="{% url 'Budget:budget-dashboard' %}" class="side-bar-link">
+            <div class="nav-link"><img src="{% static 'images/icons/uw_dashboard.svg' %}" loading="lazy" width="30" height="30" alt="" class="nav-link-image">
+                <h1 class="nav-link-text">Dashboard</h1>
+            </div>
+        </a>
+        <a href="{% url 'Budget:howy-chat' %}" class="side-bar-link">
+            <div class="nav-link"><img src="{% static 'images/icons/uw_dashboard.svg' %}" loading="lazy" width="30" height="30" alt="" class="nav-link-image">
+                <h1 class="nav-link-text">Howy</h1>
+            </div>
+        </a>
+
+        <a href="{% url 'Budget:budget-transactions' %}" class="side-bar-link">
+            <div class="nav-link"><img src="{% static 'images/icons/icons_uw_transactions.svg' %}" loading="lazy" width="46" alt="" class="nav-link-image">
+              <h1 class="nav-link-text">Transactions</h1>
+            </div>
+        </a>
+
+        <a href="{% url 'Budget:budget-budget' %}" class="side-bar-link">
+            <div class="nav-link"><img src="{% static 'images/icons/icons_uw_budget.svg' %}" loading="lazy" width="46" alt="" class="nav-link-image">
+              <h1 class="nav-link-text">Budget</h1>
+            </div>
+        </a>
+
+        <a href="{% url 'Budget:budget-goals' %}" class="side-bar-link">
+            <div class="nav-link"><img src="{% static 'images/icons/uw_goals.svg' %}" loading="lazy" width="46" alt="" class="nav-link-image">
+              <h1 class="nav-link-text">Goals</h1>
+            </div>
+        </a>
+
+        <a href="{% url 'Budget:budget-accounts' %}" class="side-bar-link">
+            <div class="nav-link"><img src="{% static 'images/icons/icons_uw_bank.svg' %}" loading="lazy" width="46" alt="" class="nav-link-image">
+              <h1 class="nav-link-text">Bank Accounts</h1>
+            </div>
+        </a>
+
+        <a href="{% url 'Budget:budget-budget' %}" class="side-bar-link">
+            <div class="nav-link"><img src="{% static 'images/icons/uw_investments.svg' %}" loading="lazy" width="46" alt="" class="nav-link-image">
+              <h1 class="nav-link-text">Investments</h1>
+            </div>
+        </a>
+
+        <a href="{% url 'Budget:budget-budget' %}" class="side-bar-link">
+        <div class="nav-link"><img src="{% static 'images/icons/icons_uw_insurance.svg' %}" loading="lazy" width="46" alt="" class="nav-link-image">
+          <h1 class="nav-link-text">Insurance</h1>
+        </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% block content %}
+
+{% endblock %}
+
+
+</body>
+
+
+
+</html>
+
+<script>
+
+    function navbarOpen() {
+        var navbarOverlay = document.getElementById('navbar-overlay');
+
+        if(navbarOverlay.style.display ==='none') {
+            navbarOverlay.style.display ='flex';
+        } else if (navbarOverlay.style.display ==='flex'){
+            navbarOverlay.style.display = 'none';
+
+        }
+    }
+
+
+
+
+
+
+</script>

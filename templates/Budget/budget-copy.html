@@ -1,0 +1,278 @@
+{% extends 'Budget/base.html' %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+{% load mathfilters %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <div class="full-page-wrapper">
+
+    <div class="section-container">
+      <div class="page-title-blue">
+        <h1 class="heading-4">Budget</h1>
+      </div>
+    </div>
+    <div class="page-divider-container">
+      <div class="page-divider w-row">
+        <div class="page-left-column w-col w-col-4">
+          <div class="account-overview-container left">
+            <div class="section-header-wrapper">
+              <h1 class="page-section-header">Overview</h1>
+            </div>
+            <div class="_20-padding-container">
+              <div>
+                <div class="total-imcome-container">
+                  <h1 class="_14px">Monthly Income:</h1>
+                  <h1 class="_24px medium green">$<span>{{ average_income|intcomma }}</span></h1>
+                </div>
+                <div class="graph-container">
+
+
+                <div>
+                  <canvas id="myChart"></canvas>
+                </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <script>
+
+                {% if all_budgets %}
+
+                    var allBudgetItemCategories = []
+                    var allBudgetCosts = []
+
+                    {% for budget in all_budgets %}
+
+                    var budgetItemCategory = '{{ budget.title }}'
+                    var budgetCosts = {{ budget.total_per_month }}
+
+                    allBudgetItemCategories.push(budgetItemCategory)
+                    allBudgetCosts.push(budgetCosts)
+
+                {% endfor %}
+
+                    console.log(allBudgetItemCategories)
+                    console.log(allBudgetCosts)
+
+
+                {% endif %}
+
+
+                const ctx = document.getElementById('myChart');
+                const chart = ctx.getContext('2d')
+
+
+
+
+
+                  new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                      labels: allBudgetItemCategories,
+                      datasets: [{
+                        label: '$ allocated',
+                        data: allBudgetCosts,
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                            display: false,
+                        },
+                        x: {
+                            display: false,
+
+                        }
+                      }
+                    }
+                  });
+
+
+                 const canvasWidth = ctx.width;
+                const canvasHeight = ctx.height;
+                const centerX = canvasWidth / 2;
+                const centerY = canvasHeight / 2;
+
+                  ctx.font = '24px Arial';
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'middle';
+                  ctx.fillText('Hello, World!', centerX, centerY);
+
+
+                </script>
+
+                </div>
+                <div class="overvoew-btm">
+                  <div class="budget-overview-btm-container">
+                    <div class="div-block"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="20" alt="">
+                      <h1 class="overview-btm-title">Total Spent</h1>
+                    </div>
+                    <h1 class="number-calculated" style="color: red;" >- $<span id="total-spent-calculator"></span></h1>
+                  </div>
+                  <div class="budget-overview-btm-container">
+                    <div class="div-block"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="20" alt="">
+                      <h1 class="overview-btm-title">Total Spent</h1>
+                    </div>
+                    <h1 class="number-calculated"><span id="total-remaining-container"></span><span id="total-remaining"></span></h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="account-overview-container left">
+            <div class="section-header-wrapper">
+              <h1 class="page-section-header">Surplus Allocation</h1>
+            </div>
+            <div class="_20-padding-container"></div>
+          </div>
+        </div>
+        <div class="column w-col w-col-8">
+          <div class="account-overview-container right">
+            <div class="section-warpper">
+              <div class="section-header-wrapper">
+                <h1 class="page-section-header">My Budget Categories</h1>
+              </div>
+
+                {% for budget in all_budgets %}
+                <a href="{% url 'Budget:view-budget' budget.budget_id %}" style="text-decoration: none">
+                <div class="_20-padding-container budget-container" >
+
+                    <div class="left-card">
+                        <div class="icon-wrapper">
+                            {% if budget.category == 'Food and Drink' %}
+                                <img src="{% static 'images/budgeting-images/food drink.svg' %}" loading="lazy" width="72" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Transportation' %}
+                                 <img src="{% static 'images/budgeting-images/transportation.svg' %}" loading="lazy" width="72" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Shops' %}
+                                 <img src="{% static 'images/budgeting-images/shop.svg' %}" loading="lazy" width="72" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Transfer' %}
+                                 <img src="{% static 'images/budgeting-images/Transfer.svg' %}" loading="lazy" width="72" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Service' %}
+                                 <img src="{% static 'images/budgeting-images/service.svg' %}" loading="lazy" width="72" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Payment' %}
+                                 <img src="{% static 'images/budgeting-images/Payment.svg' %}" loading="lazy" width="72" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Income' %}
+                                 <img src="{% static 'images/budgeting-images/income.svg' %}" loading="lazy" width="72" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Subscription' %}
+                                <img src="{% static 'images/budgeting-images/subscriptions-icon.png' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Miscellaneous' %}
+                                <img src="{% static 'images/icons/110136_colors_512x512.png' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif budget.category == 'Other' %}
+                                <img src="{% static 'images/icons/other-icon.png' %}" loading="lazy" alt="" class="icon-img no-radius">
+
+                            {% endif %}
+
+
+                      </div>
+                      <div class="transaction-place-wrapper">
+                        <h4 class="_18px">{{ budget.title|slice:":12" }}</h4>
+                      </div>
+                      <div class="transaction-amount-wrapper"></div>
+                    </div>
+                    <div class="goal-back-progress-bar">
+                        {% if budget.current_total|div:budget.total_per_month|mul:100 <= 100 %}
+                            <div class="goal-progerss" style="width: {{ budget.current_total|div:budget.total_per_month|mul:100}}%"></div>
+
+
+                        {% else %}
+                            <div class="goal-progerss" style="width: 100%; background-color: red"></div>
+
+                        {% endif %}
+
+                    </div>
+                    <div class="right-card">
+
+                        <div class="form-wrapper budget">
+                        <div class="form-block w-form">
+                          <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form">
+                            <div class="check-wrapper"><img src="images/Green-check.svg" loading="lazy" width="35" height="35" alt=""></div>
+                          </form>
+                          <div class="w-form-done">
+                            <div>Thank you! Your submission has been received!</div>
+                          </div>
+                          <div class="w-form-fail">
+                            <div>Oops! Something went wrong while submitting the form.</div>
+                          </div>
+                        </div>
+                        <h4 class="_24px medium green">$<span id="{{ budget.budget_id }}">{{ budget.current_total|floatformat }}</span></h4>
+                        <h4 class="_24px medium"> / </h4>
+                        <h4 class="_24px medium">$<span>{{ budget.total_per_month }}</span></h4>
+                      </div>
+                    </div>
+              </div>
+            </a>
+                {% endfor %}
+
+
+              <a href="{% url 'Budget:add-budget' %}" class="no-text-decoration">
+                <div class="goals-card add-goal">
+                  <div class="goal-middle-section">
+                    <div class="goalcard-contents-wrapper add-goal">
+                      <h3 class="_24px semibold text add-goal" style="color: #1f79ba">Add Category +</h3>
+                    </div>
+                  </div>
+                </div>
+                </a>
+                {% if not all_budgets %}
+                <a href="{% url 'Budget:generate-budget' %}" class="no-text-decoration">
+                <div class="goals-card add-goal" style="background-color: #1f79ba; color: white">
+                  <div class="goal-middle-section">
+                    <div class="goalcard-contents-wrapper add-goal">
+                      <h3 class="_24px semibold text add-goal" style="color: white">Build Budget</h3>
+                    </div>
+                  </div>
+                </div>
+                </a>
+                {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+// for calculating total spend and remaining on student/budget/budget
+var elements = document.getElementsByClassName('_20-padding-container budget-container')
+var total_spent = 0
+var final_allocated = 0
+for(let i = 0; i < elements.length; i++) {
+    var currentSpent = elements[i].children[2].children[0].children[1].children[0].innerHTML
+    if(currentSpent === 'None') {
+        elements[i].children[2].children[0].children[1].children[0].innerHTML = '0'
+        console.log('it is none')
+        currentSpent = 0
+    }
+    total_spent += Number(currentSpent)
+    var total_allocated = elements[i].children[2].children[0].children[3].children[0].innerHTML
+    final_allocated += Number(total_allocated)
+}
+
+var totalSpentTarget = document.getElementById('total-spent-calculator')
+var totalRemainingTarget = document.getElementById('total-remaining')
+totalSpentTarget.innerText = Math.round(total_spent)
+var remaining = Number(final_allocated) - total_spent
+totalRemainingTarget.innerText = Math.round(remaining).toLocaleString()
+var totalRemainingContainerTarget = document.getElementById('total-remaining-container')
+
+if(remaining <= 0) {
+    totalRemainingTarget.style.color = 'red'
+    totalRemainingContainerTarget.innerText = '- $'
+    totalRemainingContainerTarget.style.color = 'red'
+} else {
+    totalRemainingTarget.style.color = 'green'
+    totalRemainingContainerTarget.innerText = '+ $'
+    totalRemainingContainerTarget.style.color = 'green'
+
+}
+
+
+
+
+</script>
+
+{% endblock %}

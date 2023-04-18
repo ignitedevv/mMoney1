@@ -1,0 +1,236 @@
+{% extends 'Budget/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <div class="full-page-wrapper">
+      <div class="section-banner wf-section">
+    <h1 class="heading-4">Dashboard</h1>
+  </div>
+    <div class="page-divider-container">
+      <div class="page-divider w-row">
+        <div class="page-left-column w-col w-col-4">
+          <div class="account-overview-container left">
+            <div class="section-header-wrapper">
+              <h1 class="page-section-header">Overview</h1>
+            </div>
+            <div class="account-ov-wrapper top-spacing">
+              <div class="account-ov-information total-spent">
+                <div class="account-title total-spent" style="color: red">$<span class="text-span-3" id="total-spent">*total spent*</span></div>
+                <div class="sub-text">Spent in {{ month_name }}</div>
+              </div>
+            </div>
+            <div class="account-ov-wrapper top-spacing all-accounts selected">
+              <div class="account-ov-information">
+                <div class="account-title selected">All Accounts</div>
+              </div>
+            </div>
+            <div class="account-ov-wrapper top-spacing">
+              <div class="account-ov-information" style="padding-left: 15px; padding-right: 15px"><img src="images/assers-arrow.svg" loading="lazy" width="12" height="12" alt="">
+                <div class="account-title" style="padding-right: 5px">Checking &amp; Savings</div>
+                <div class="account-balance">$<span class="text-span">{{ balance|intcomma }}</span></div>
+              </div>
+            </div>
+            <div class="account-ov-wrapper top-spacing" style="display: none">
+              <div class="account-ov-information" style="padding-left: 15px; padding-right: 15px"><img src="images/Liabilities-arrow.svg" loading="lazy" width="12" height="12" alt="">
+                <div class="account-title" style="padding-right: 5px">Credit Cards</div>
+                <div class="account-balance">$<span class="text-span">*Balance*</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column w-col w-col-8">
+          <div class="account-overview-container right">
+            <div class="section-warpper">
+              <div class="section-header-wrapper">
+                <h1 class="page-section-header">All Transactions</h1>
+                <div class="transaction-filter-wrapper">
+
+                <div class="filter-categories-wrapper selected" style="height: 40px" onclick="transactionsToggle(this, '1')">
+                    <div class="text-block">All</div>
+                  </div>
+
+                  <div class="filter-categories-wrapper not-selected" style="height: 40px" onclick="transactionsToggle(this, '2')">
+                    <div class="text-block">Completed</div>
+                  </div>
+
+                  <div class="filter-categories-wrapper not-selected" style="height: 40px" onclick="transactionsToggle(this, '3')">
+                    <div class="text-block">Incomplete</div>
+                  </div>
+
+                  <div class="search-wrapper" style="display: none">
+                    <div class="form-block-2 w-form">
+                      <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" class="form-2"><input type="text" class="text-field w-input" maxlength="256" name="field" data-name="Field" placeholder="Search Here" id="field" required="" style="height: 40px"></form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+                {% for tramsactiom in transaction_data %}
+
+                <div class="_20-padding-container transaction-card" id="all-transactions-card" style="margin-bottom: 10px; margin-top: 10px">
+                <div class="left-card" style="width: 55%">
+                      <div class="icon-wrapper">
+                      {% if tramsactiom.category.0 == 'Payment' %}
+                                <img src="{% static 'images/budgeting-images/Payment.svg' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif tramsactiom.category.0 == 'Food and Drink' %}
+                                <img src="{% static 'images/budgeting-images/food drink.svg' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif tramsactiom.category.0 == 'Shops' %}
+                                <img src="{% static 'images/budgeting-images/shop.svg' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif tramsactiom.category.0 == 'Transfer' %}
+                                <img src="{% static 'images/budgeting-images/Transfer.svg' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif tramsactiom.category.0 == 'Service' %}
+                                <img src="{% static 'images/budgeting-images/service.svg' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif tramsactiom.category.0 == 'Transportation' %}
+                                <img src="{% static 'images/budgeting-images/transportation.svg' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif tramsactiom.category.0 == 'Income' %}
+                                <img src="{% static 'images/budgeting-images/income.svg' %}" loading="lazy" alt="" class="icon-img no-radius">
+                            {% elif tramsactiom.category.0 == 'Subscription' %}
+                                <img src="{% static 'images/budgeting-images/subscriptions-icon.png' %}" loading="lazy" alt="" class="icon-img no-radius">
+
+                            {% else %}
+                                <img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="icon-img">
+                            {% endif %}
+                      </div>
+                      <div class="transaction-place-wrapper" style="min-width: auto">
+                        <h4 class="_18px">{{ tramsactiom.name }}</h4>
+                      </div>
+                      <div class="transaction-amount-wrapper">
+                        <div class="_24px medium" style="color: red">- $<span>{{ tramsactiom.amount }}</span></div>
+                      </div>
+              </div>
+                <div class="right-card">
+                  <div class="date-wrapper">
+                    <div class="_18px normal light-grey" style="font-size: 14px">{{ tramsactiom.date }}</div>
+                  </div>
+                  <div class="form-wrapper">
+                    <form method="Post">
+                      <div class="form-block">
+                        <div id="email-form" class="form">
+
+                        <select id="transaction-category" name="transaction-category" data-name="transaction category" class="select-transaction-class" onchange="changeTransaction(this, '{{ tramsactiom.transaction_id }}')">
+                            {% if tramsactiom.associated_budget == 'none' %}
+                             <option value="" >--{{ tramsactiom.category.0 }}--</option>
+                                {% for budget in budget_categories %}
+                                    {% if  budget.category == tramsactiom.category.0 %}
+                                        <option value="{{ budget.budget_id }}" >{{ budget.title }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                <option value="" >--OTHER--</option>
+                                {% for budget in budget_categories %}
+                                    {% if  budget.category != tramsactiom.category.0 %}
+                                        <option value="{{ budget.budget_id }}" >{{ budget.title }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <option value="{{ tramsactiom.associated_budget }}" selected>{{ tramsactiom.associated_budget }}</option>
+                                {% for budget in budget_categories %}
+                                    {% if budget.title != tramsactiom.associated_budget  %}
+                                        <option value="{{ budget.budget_id }}" >{{ budget.title }}</option>
+                                    {% endif %}
+                                {% endfor %}
+
+                            {% endif %}
+                        </select>
+
+
+                        <script>
+
+
+                         function changeTransaction(a, button) {
+
+                            var Button = document.getElementById('button-' + button)
+                            a.parentElement.children[2].style.display = 'block'
+                            a.parentElement.children[3].children[0].style.display = 'none'
+                            var title = a.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[1].children[0].innerHTML
+
+
+                             Button.onclick = function() {
+                                console.log('a')
+                                var budgetTitle = a.value
+                                var theCategory = a.options[a.selectedIndex].innerText
+
+                                var date = a.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[0].innerHTML
+                                 console.log(date)
+                                a.parentElement.children[2].style.display = 'none'
+                                a.parentElement.children[3].children[0].style.display = 'block'
+                                var cost = a.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.children[0].children[2].children[0].children[0].innerHTML
+
+                                $.ajax({
+                                          type: "POST",
+                                          url: '/budget/transactions',
+                                          data: {
+                                              csrfmiddlewaretoken: '{{csrf_token}}',
+                                              action: "post",
+                                              test: theCategory,
+                                              budget: budgetTitle,
+                                              transaction_date: date,
+                                              tran_title: title,
+                                              the_id: button,
+                                              amount: cost,
+                                              category1: "{{ tramsactiom.category.0 }}",
+                                              category2: "{{ tramsactiom.category.1 }}"
+
+                                            }
+                                        })
+                                }
+                            }
+
+
+                    </script>
+
+                        {% if tramsactiom.checked != 'yes' %}
+                        <input type="button" value="Correct" data-wait="Please wait..." class="submit-button" id="button-{{ tramsactiom.transaction_id }}">
+                        {% else %}
+                            <input type="button" value="Correct" data-wait="Please wait..." style="display: none;" class="submit-button" id="button-{{ tramsactiom.transaction_id }}">
+                        {% endif %}
+
+                        <div class="" style="padding-left: 20px">
+
+
+                        {% if tramsactiom.checked == 'yes' %}
+                            <img src="{% static 'images/icons/green-check-icon.png' %}" loading="lazy" style="display: block;" width="35" height="35" alt="" ></div>
+                        {% else %}
+                            <img src="{% static 'images/icons/green-check-icon.png' %}" loading="lazy" width="35" height="35" alt="" style="display: none;" id="check-{{ tramsactiom.transaction_id }}"></div>
+                        {% endif %}
+                        </div>
+                  </form>
+                  </div>
+
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+// Code for calculating total spent on transactions
+var transactionElements = document.getElementsByClassName('_20-padding-container transaction-card')
+var totalSpent = 0
+var total_spent_transactions = 0
+for(let i = 0; i < transactionElements.length; i++) {
+    var TotalSpent = transactionElements[i].children[0].children[2].children[0].children[0].innerHTML
+    totalSpent += Number(TotalSpent)
+
+    console.log(TotalSpent)
+}
+
+document.getElementById('total-spent').innerText = (Math.round(totalSpent * 100) / 100).toLocaleString()
+
+</script>
+<script src="{% static 'budget/js/script.js' %}" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}

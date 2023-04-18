@@ -1,0 +1,223 @@
+{% extends 'budget/base.html' %}
+{% load static %}
+{% block content %}
+<body>
+  <div class="background-blur wf-section" style="height: 91vh">
+    <div class="_60-padding" style="display: flex; width: auto; padding-bottom: 20px; padding-top: 30px; padding-right: 40px; padding-left: 40px; justify-content: center; margin-top: 0px">
+      <div class="w-layout-grid grid-2 hidden-calendar no-calendar">
+        <div id="w-node-d23ddebc-133a-9942-783f-c833d5e69064-2acd809f">
+          <h1 class="heading-36">Add a Budget Category</h1>
+          <div class="pop-up-form-wrapper">
+            <div class="w-form">
+              <form id="add-budget" name="wf-form-add-budget" data-name="add budget" method="post" class="add-budget-form">
+                  {% csrf_token %}
+                  <label style="font-weight: 500; font-family: Poppins; color: #142450; font-size: 14px">Budget Title</label>
+                  {{ form.title }}
+                  <label style="font-weight: 500; font-family: Poppins; color: #142450; font-size: 14px">Max Per Month</label>
+                  {{ form.total_per_month }}
+                  <label style="font-weight: 500; font-family: Poppins; color: #142450; font-size: 14px">Type</label>
+                  {{ form.category }}
+
+                <div class="_18-poppins" style="font-weight: 500; font-family: Poppins; color: #142450; font-size: 14px; display: none">Color</div>
+                <div class="color-selector" style="display: none">
+
+                    <div class="color-choice" style="padding: 10px; background-color: red; border-radius: 10px"></div>
+                    <div class="color-choice" style="padding: 10px; background-color: red; border-radius: 10px"></div>
+                    <div class="color-choice" style="padding: 10px; background-color: red; border-radius: 10px"></div>
+                    <div class="color-choice" style="padding: 10px; background-color: red; border-radius: 10px"></div>
+                    <div class="color-choice" style="padding: 10px; background-color: red; border-radius: 10px"></div>
+                    <div class="color-choice" style="padding: 10px; background-color: red; border-radius: 10px"></div>
+
+                </div>
+                <div class="save-back-wrapper no-padding">
+                  <a href="{% url 'Budget:add-budget' %}" class="back-btn" style="text-decoration: none; align-items: center; align-content: center">Back</a>
+                    <input type="submit" value="Add" data-wait="Please wait..." class="next-btn" style="text-decoration: none; color: white">
+                </div>
+              </form>
+
+
+              <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+              </div>
+              <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="w-node-c30e5007-b99f-a8ba-30ff-b34321eb116a-2acd809f" class="centered-div calendar-hhidden">
+          <div class="_20-padding-container box-shadow">
+            <div class="calendar-wrapper">
+              <div class="month-year-wrapper">
+                <div><span>*Month*</span> <span>*Year*</span></div>
+              </div>
+              <div class="day-wrapper">
+                <div class="w-layout-grid grid-3">
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6460-2acd809f" class="day-name">
+                    <div class="text-block-3">Sun</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6463-2acd809f" class="day-name">
+                    <div class="text-block-3">Mon</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6466-2acd809f" class="day-name">
+                    <div class="text-block-3">Tue</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6469-2acd809f" class="day-name">
+                    <div class="text-block-3">Wed</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b646c-2acd809f" class="day-name">
+                    <div class="text-block-3">Thu</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b646f-2acd809f" class="day-name">
+                    <div class="text-block-3">Fri</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6472-2acd809f" class="day-name">
+                    <div class="text-block-3">Sat</div>
+                  </div>
+                </div>
+              </div>
+              <div class="day-number-wrapper">
+                <div class="w-layout-grid grid-4">
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6477-2acd809f" class="number non-current">
+                    <div>30</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b647a-2acd809f" class="number current-month">
+                    <div>01</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b647d-2acd809f" class="number current-month">
+                    <div>02</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6480-2acd809f" class="number current-month">
+                    <div>03</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6483-2acd809f" class="number current-month">
+                    <div>04</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6486-2acd809f" class="number current-month">
+                    <div>05</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6489-2acd809f" class="number current-month">
+                    <div>06</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b648c-2acd809f" class="number current-month">
+                    <div>07</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b648f-2acd809f" class="number current-month">
+                    <div>08</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6492-2acd809f" class="number current-month">
+                    <div>09</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6495-2acd809f" class="number current-month">
+                    <div>10</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b6498-2acd809f" class="number current-month">
+                    <div>11</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b649b-2acd809f" class="number current-month">
+                    <div>12</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b649e-2acd809f" class="number current-month">
+                    <div>13</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64a1-2acd809f" class="number current-month">
+                    <div>14</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64a4-2acd809f" class="number current-month">
+                    <div>15</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64a7-2acd809f" class="number current-month">
+                    <div>16</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64aa-2acd809f" class="number current-month current-day">
+                    <div>17</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64ad-2acd809f" class="number current-month">
+                    <div>18</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64b0-2acd809f" class="number current-month">
+                    <div>19</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64b3-2acd809f" class="number current-month">
+                    <div>20</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64b6-2acd809f" class="number current-month">
+                    <div>21</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64b9-2acd809f" class="number current-month">
+                    <div>22</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64bc-2acd809f" class="number current-month">
+                    <div>23</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64bf-2acd809f" class="number current-month">
+                    <div>24</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64c2-2acd809f" class="number current-month">
+                    <div>25</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64c5-2acd809f" class="number current-month">
+                    <div>26</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64c8-2acd809f" class="number current-month">
+                    <div>27</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64cb-2acd809f" class="number current-month">
+                    <div>28</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64ce-2acd809f" class="number current-month">
+                    <div>29</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64d1-2acd809f" class="number current-month">
+                    <div>30</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64d4-2acd809f" class="number current-month">
+                    <div>31</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64d7-2acd809f" class="number non-current">
+                    <div>1</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64da-2acd809f" class="number non-current">
+                    <div>02</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64dd-2acd809f" class="number non-current">
+                    <div>03</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64e0-2acd809f" class="number non-current">
+                    <div>04</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64e3-2acd809f" class="number non-current">
+                    <div>05</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64e6-2acd809f" class="number non-current">
+                    <div>06</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64e9-2acd809f" class="number non-current">
+                    <div>07</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64ec-2acd809f" class="number non-current">
+                    <div>08</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64ef-2acd809f" class="number non-current">
+                    <div>09</div>
+                  </div>
+                  <div id="w-node-c510ffac-602c-ac00-55bd-d1118d7b64f2-2acd809f" class="number non-current">
+                    <div>10</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="projected-contribution">
+            <h1 class="_18-poppins pagecolor">Projected Completion:</h1>
+            <h1 class="_18-poppins prosperon">*Date*</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+
+{% endblock %}

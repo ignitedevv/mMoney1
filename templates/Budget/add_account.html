@@ -1,0 +1,72 @@
+{% extends 'Budget/base.html' %}
+{% load static %}
+{% block headers %}
+{% endblock %}
+
+{% block content %}
+
+<button id="link-button">Link Account</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+{{ linktoken }}
+
+<script type="text/javascript">
+    (async function($) {
+    console.log('{{ link_token }}')
+
+  var handler = Plaid.create({
+    // Create a new link_token to initialize Link
+    token: '{{ link_token }}',
+
+
+    onSuccess: function(public_token, metadata) {
+        console.log(public_token)
+      // Account Select view is enabled.
+      $.ajax({
+          type: "POST",
+          url: '{% url 'Budget:budget-oauth' %}',
+          data: {
+              public_token: public_token,
+              csrfmiddlewaretoken: "{{csrf_token}}",
+              action: "post",
+          }
+
+      });
+
+    },
+
+
+
+
+    onExit: function(err, metadata) {
+      // The user exited the Link flow.
+      if (err != null) {
+        // The user encountered a Plaid API error prior to exiting.
+      }
+      // metadata contains information about the institution
+      // that the user selected and the most recent API request IDs.
+      // Storing this information can be helpful for support.
+    },
+    onEvent: function(eventName, metadata) {
+      // Optionally capture Link flow events, streamed through
+      // this callback as your users connect an Item to Plaid.
+      // For example:
+      // eventName = "TRANSITION_VIEW"
+      // metadata  = {
+      //   link_session_id: "123-abc",
+      //   mfa_type:        "questions",
+      //   timestamp:       "2017-09-14T14:42:19.350Z",
+      //   view_name:       "MFA",
+      // }
+    }
+  });
+
+  $('#link-button').on('click', function(e) {
+    handler.open();
+    console.log('fire handeler')
+  });
+})(jQuery);
+</script>
+{% endblock %}

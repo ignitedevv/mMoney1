@@ -1,0 +1,380 @@
+{% extends 'Budget/base.html' %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+
+
+<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #f2f2f2;
+			font-family: Arial, sans-serif;
+		}
+		.container {
+			max-width: 800px;
+			margin: 20px auto;
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.1);
+			overflow: hidden;
+			padding: 0;
+			list-style: none;
+		}
+		.message {
+			display: flex;
+			flex-direction: column;
+			margin: 10px;
+		}
+		.message .text {
+			display: inline-block;
+			max-width: 80%;
+			padding: 10px;
+			border-radius: 10px;
+			margin-bottom: 5px;
+			font-size: 16px;
+			line-height: 1.4;
+			word-wrap: break-word;
+		}
+		.message.sent .text {
+			background-color: #0084ff;
+			color: #fff;
+			align-self: flex-end;
+		}
+		.message.received .text {
+			background-color: #e6e6e6;
+			color: #333;
+			align-self: flex-start;
+		}
+		.form {
+			display: flex;
+			align-items: center;
+			background-color: #fff;
+			border-top: 1px solid #e6e6e6;
+			padding: 10px;
+		}
+		.form input[type="text"] {
+			flex-grow: 1;
+			padding: 10px;
+			font-size: 16px;
+			border: none;
+			border-radius: 5px;
+			margin-right: 10px;
+		}
+		.form button {
+			padding: 10px 20px;
+			font-size: 16px;
+			background-color: #0084ff;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+        .input-container {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          background-color: #f0f0f0;
+          /* other styles for input container */
+        }
+
+        #id_input_field {
+          /* input field styles */
+          border: none;
+          border-radius: 5px;
+          padding: 10px;
+          font-size: 16px;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        #button {
+          /* send button styles */
+          margin-left: 10px;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #4caf50;
+          color: #fff;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+        .id_input_field {
+          /* input field styles */
+          border: none;
+          border-radius: 5px;
+          padding: 10px;
+          font-size: 16px;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        .button {
+          /* send button styles */
+          margin-left: 10px;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #4caf50;
+          color: #fff;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+
+</style>
+
+
+
+<p id="output-container" style="display: none"></p>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+<ul id="myList" class="container" style="overflow: scroll"></ul>
+
+<div class="input-container" style="padding: 20px">
+  <form id="input-form">
+    {% csrf_token %}
+    {{ form.input_field }}
+
+    <button id="button" type="submit" style="margin-top: 20px">Submit</button>
+
+
+  </form>
+    <input type="text" class="id_input_field" style="display: none" id="second-input-field" name="second-input">
+    <button id="secondary-button" type="button" class="button" style="margin-top: 20px; display: none">Submit</button>
+</div>
+
+
+
+<script>
+
+// Initializatoms
+let list = document.getElementById("myList")
+var question_sequence_length = 0
+var question_sequence_total_length = 0
+var testelm = ''
+var active_question_sequence = false
+var question_list = []
+
+
+// code for adding inputs to chat list.
+// 0 == received messages
+// 1 == sent messages
+function addInput(thet, type) {
+    if (type === '0') {
+        var li = document.createElement("li")
+        li.className = 'message received'
+        list.appendChild(li)
+        var text = document.createElement('div')
+        text.className = 'message received text'
+        text.innerText = thet
+        li.appendChild(text)
+    } else if (type === '1') {
+        var li = document.createElement("li")
+        li.className = 'message sent'
+        list.appendChild(li)
+        var text = document.createElement('div')
+        text.className = 'message sent text'
+        text.innerText = thet
+        li.appendChild(text)
+    }
+}
+
+
+// function for sending ajax form
+function sendForm() {
+    console.log('send form')
+    var list = question_list
+    $.ajax({
+          type: "POST",
+          url: '{% url 'Budget:howy-handler' %}',
+          data: {
+              csrfmiddlewaretoken: "{{csrf_token}}",
+              action: "post",
+              the_list: JSON.stringify(list),
+          }
+      });
+}
+
+
+function handel_question_sequence(question_sequence) {
+    active_question_sequence = true
+    var length_of_question_sequence = question_sequence[2].length
+    testelm = question_sequence[2]
+    question_sequence_total_length = length_of_question_sequence
+    console.log(length_of_question_sequence)
+    // document.getElementById('form-input').style.display = 'none'
+    console.log('handling question sequence')
+
+    // adding first question in sequence to chat
+    var li = document.createElement("li")
+    li.className = 'message received'
+    list.appendChild(li)
+    var text = document.createElement('div')
+    text.className = 'message received text'
+    text.innerText = question_sequence[2][0]
+    li.appendChild(text)
+
+    // next step handling things hiding and showing
+    if (question_sequence[4] === 'Y') {
+        var test = document.getElementById('id_input_field')
+        test.style.display = 'none'
+        document.getElementById('second-input-field').style.display = 'flex'
+        document.getElementById('button').style.display = 'none'
+        var secondary_button = document.getElementById('secondary-button')
+        secondary_button.style.display = 'flex'
+        console.log('FINISHED')
+    } else {
+        console.log('passssss')
+    }
+
+
+
+}
+
+function handle_secondary_questions() {
+    question_sequence_length += 1
+    console.log(question_sequence_length)
+    console.log(testelm[question_sequence_length])
+    var messageg_sent_text = document.getElementById('second-input-field').value
+
+
+    if (question_sequence_length === question_sequence_total_length) {
+        console.log('tehy are now equal')
+        addInput(messageg_sent_text, '1')
+        question_list.push(messageg_sent_text)
+
+
+    } else if (question_sequence_length === (question_sequence_total_length - 1)) {
+        addInput(messageg_sent_text, '1')
+        question_list.push(messageg_sent_text)
+        addInput(testelm[question_sequence_length], '0')
+        var test = document.getElementById('id_input_field')
+        test.style.display = 'flex'
+        document.getElementById('second-input-field').style.display = 'none'
+        document.getElementById('button').style.display = 'flex'
+        var secondary_button = document.getElementById('secondary-button')
+        secondary_button.style.display = 'none'
+        sendForm()
+
+    } else {
+        addInput(messageg_sent_text, '1')
+        question_list.push(messageg_sent_text)
+        addInput(testelm[question_sequence_length], '0')
+    }
+
+}
+
+
+
+
+
+var secondary_button = document.getElementById('secondary-button')
+secondary_button.addEventListener('click', handle_secondary_questions)
+
+function check_data(input, question_sequence){
+    question_list = []
+    var question_id = question_sequence[3]
+    if (input  === 'Yes I can build you a budget.') {
+        console.log('gotime')
+        question_list.push(question_id)
+        handel_question_sequence(question_sequence)
+    } else if (input  === 'I will check that for you') {
+        console.log('gotime')
+        question_list.push(question_id)
+        handel_question_sequence(question_sequence)
+    } else if (input  === 'Let me check how many years it will take.') {
+        console.log('gotime')
+        question_list.push(question_id)
+        handel_question_sequence(question_sequence)
+
+
+
+
+
+
+    } else {
+        console.log('pass')
+    }
+}
+
+
+
+
+
+var questions = []
+
+
+
+
+$(document).ready(function() {
+    $('#input-form').submit(function(event) {
+        var test123123 = document.getElementById('id_input_field').value
+        console.log('tesetwestsetset---', test123123)
+        var li = document.createElement("li")
+        li.className = 'message sent'
+        list.appendChild(li)
+        var text = document.createElement('div')
+        text.className = 'message sent text'
+        text.innerText = test123123
+        li.appendChild(text)
+
+        // prevent the default form submission behavior
+        event.preventDefault();
+
+        // get the input data from the form
+        var form_data = $(this).serialize();
+
+        // make an AJAX request to the server
+        $.ajax({
+            url: "{% url 'Budget:howy-chat' %}",
+            type: "POST",
+            data: form_data,
+            success: function(data) {
+                if (typeof data.output_data === "string") {
+                    var first_response = data.output_data
+                } else {
+                    var first_response = data.output_data[1]
+                }
+                console.log(first_response)
+                // update the content on the page with the response data
+                $('#output-container').html('<p>' + first_response + '</p>');
+                console.log(first_response)
+                var li = document.createElement("li")
+                li.className = 'message received'
+                list.appendChild(li)
+                var text = document.createElement('div')
+                text.className = 'message received text'
+                text.innerText = first_response
+                li.appendChild(text)
+                console.log('new data')
+                check_data(first_response, data.output_data)
+            },
+            error: function(xhr, status, error) {
+                // handle any errors
+                console.log(error);
+            }
+        });
+
+        document.getElementById('id_input_field').value = ''
+
+
+    });
+});
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+

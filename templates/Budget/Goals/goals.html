@@ -1,0 +1,98 @@
+{% extends 'Budget/base.html' %}
+{% load static %}
+{% block content %}
+
+
+  <div class="full-page-wrapper">
+    <div class="section-container">
+      <div class="page-title-blue">
+        <h1 class="heading-4">Goals</h1>
+      </div>
+    </div>
+    <div class="page-divider-container">
+      <div class="page-divider w-row">
+        <div class="page-left-column w-col w-col-4">
+          <div class="account-overview-container left">
+            <div class="section-header-wrapper">
+              <h1 class="page-section-header">Overview</h1>
+            </div>
+            <div class="_20-padding-container"></div>
+          </div>
+          <div class="account-overview-container left">
+            <div class="section-header-wrapper">
+              <h1 class="page-section-header">Surplus Allocation</h1>
+              <div class="filter-wrapper">
+                <div><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="25" height="25" alt=""></div>
+                <div class="_10-left"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="25" height="25" alt=""></div>
+              </div>
+            </div>
+            <div class="_20-padding-container">
+              <div class="w-layout-grid grid">
+                <div id="w-node-c5116eb7-eb25-4e13-891e-b6b20529e485-0d79b905">
+                  <div class="centered-text">Total Surplus:</div>
+                  <div class="centered-text semibold">$<span>*Amount*</span></div>
+                </div>
+                <div id="w-node-_99ecd2a8-0a3a-f672-139c-e07cc2486e52-0d79b905">
+                  <div class="centered-text">Total Allocated:</div>
+                  <div class="centered-text semibold">$<span>*amount*</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column w-col w-col-8">
+          <div class="account-overview-container right">
+            <div class="section-warpper">
+              <div class="section-warpper">
+                <div class="section-header-wrapper">
+                  <h1 class="page-section-header">Top 3 Goals</h1>
+                  <div class="more-wrapper">
+                    <div class="more-text">More Goals</div><img src="images/Drowdown.svg" loading="lazy" width="10" height="10" alt="" class="image">
+                  </div>
+                </div>
+
+                  {% for goal in myGoals %}
+                  <a href="{% url 'Budget:budget-viewGoals' goal.id  %}" class="goal-link">
+                  <div class="goals-card">
+                  <div class="goal-image-wrapper"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="icon-img"></div>
+                  <div class="goal-middle-section">
+                    <div class="goalcard-contents-wrapper">
+                      <h3 class="_24px semibold text">{{ goal.title }}</h3>
+                      <div class="goal-values-wrapper">
+                        <h3 class="_24px medium green">$<span>{{ goal.current_amount }}</span></h3>
+                        <h3 class="_24px medium text">/</h3>
+                        <h3 class="_24px medium text">$<span>{{ goal.cost }}</span></h3>
+                      </div>
+                    </div>
+                    <div class="goal-back-progress-bar">
+                      <div class="goal-progerss"></div>
+                    </div>
+                  </div>
+                  <div class="day-counter-wrapper">
+                    <div class="day-counter blue">30</div>
+                    <div class="subtext">More Days</div>
+                  </div>
+                </div>
+                  </a>
+                  {% endfor %}
+
+                <a href="{% url 'Budget:budget-addGoals' %}" class="no-text-decoration">
+                <div class="goals-card add-goal">
+                  <div class="goal-middle-section">
+                    <div class="goalcard-contents-wrapper add-goal">
+                      <h3 class="_24px semibold text add-goal">Add a Goal +</h3>
+                    </div>
+                  </div>
+                  <div class="day-counter-wrapper"></div>
+                </div>
+                </a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
