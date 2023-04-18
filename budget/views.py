@@ -391,16 +391,16 @@ def notifications(request):
 
 def index(request):
     rooms = Room.objects.all()
-    return render(request, 'Budget/chat/index.html', {'rooms': rooms})
+    return render(request, 'chat/index.html', {'rooms': rooms})
 
 def create_room(request):
     if request.method == 'POST':
         room_name = request.POST['room_name']
         Room.objects.create(name=room_name)
         return redirect('Budget:index')
-    return render(request, 'Budget/chat/create_room.html')
+    return render(request, 'chat/create_room.html')
 
 def join_room(request, room_name):
     room = Room.objects.get(name=room_name)
-    return render(request, 'Budget/chat/room.html', {'room': room})
+    return render(request, 'chat/room.html', {'room': room})
 
