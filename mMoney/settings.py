@@ -85,10 +85,20 @@ WSGI_APPLICATION = 'mMoney.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'db5l6kl7f4snqn',
+        'USER': 'fboeeiiztattpy',
+        'PASSWORD': '69220188b9d2d73d8f2ece0ea6a1917e8e00ea1da294a67f90ed58b3e180a124',
+        'HOST': 'ec2-3-93-160-246.compute-1.amazonaws.com',
+        'PORT': '5432',
+
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
+
 
 
 
