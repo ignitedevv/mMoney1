@@ -1,1 +1,1 @@
-web: daphne mMoney.asgi:application
+web: gunicorn mMoney.wsgi
