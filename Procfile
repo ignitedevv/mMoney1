@@ -1,1 +1,1 @@
-web: daphne myapp.asgi:application
+web: daphne mMoney.asgi:application
