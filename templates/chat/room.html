@@ -15,14 +15,11 @@
   </form>
 
   <script>
-    // Add your JavaScript code for WebSocket communication (same as previous response)
-// Add your JavaScript code for WebSocket communication
+    // Add your JavaScript code for WebSocket communication
     const roomName = "{{ room.name }}";
     const chatSocket = new WebSocket(
         'wss://' + window.location.host + '/ws/chat/' + roomName + '/'
     );
-
-    console.log(chatSocket)
 
     // WebRTC code starts here
     const localVideo = document.getElementById('local-video');
@@ -78,11 +75,20 @@
       await localPeerConnection.addIceCandidate(new RTCIceCandidate(candidate));
     }
 
+    async function handleOffer(offer) {
+      await localPeerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+      const answer = await localPeerConnection.createAnswer();
+      await localPeerConnection.setLocalDescription(answer);
+      chatSocket.send(JSON.stringify({
+        'answer': answer
+      }));
+    }
+
     chatSocket.onmessage = function(event) {
       const data = JSON.parse(event.data);
 
       if (data.offer) {
-        handleAnswer(data.offer);
+        handleOffer(data.offer);
       } else if (data.answer) {
         handleAnswer(data.answer);
       } else if (data.ice_candidate) {
@@ -92,17 +98,17 @@
       }
     };
 
+    // Add a flag to determine if the current user is the initiator
+    const isInitiator = location.hash === "#init";
+
     // Initialize WebRTC
     init().then(() => {
-      // Create an offer after a delay to ensure the WebSocket is connected
-      setTimeout(() => {
-        createOffer();
-      }, 1000);
+      if (isInitiator) {
+        // Create an offer after a delay to ensure the WebSocket is connected
+        setTimeout(() => {
+          createOffer();
+        }, 1000);
+      }
     });
-
-
-
-
-
   </script>
 {% endblock %}
