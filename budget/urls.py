@@ -44,4 +44,10 @@ urlpatterns = [
     path('howy', howy_views.handle_input, name='howy-chat'),
     path('howy-handler', howy_form_handeler.handle_sent_forms, name='howy-handler'),
 
+    path('', views.index, name='index'),
+    path('create/', views.create_room, name='create_room'),
+    path('<str:room_name>/', views.join_room, name='join_room'),
+
+
+
 ]

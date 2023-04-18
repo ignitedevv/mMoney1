@@ -8,6 +8,8 @@ import random
 from .plaid_integrations import plaid_get_Transactions, plaid_get_account_balance
 from .functions import package_transaction
 import datetime as dt
+from django.shortcuts import render, redirect
+from .models import Room
 
 # creating env object
 env = environ.Env()
@@ -95,6 +97,34 @@ def refresh(request):
     start_date = str(current_date).split("-")
     start_date[1] = '01'
     start_date = '-'.join(start_date)
+
+    url = 'https://development.plaid.com/link/token/create'
+
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    CLIENT_ID = '64233564b2767700140073ac'
+    SECRET = 'cd964c942048169ce2eb7d73800c82'
+
+    data = {
+        "client_id": f"{CLIENT_ID}",
+        "secret": f"{SECRET}",
+        "client_name": "mMoney",
+        "user": {"client_user_id": "123"},
+        "country_codes": ["US"],
+        "language": "en",
+        "webhook": "https://127.0.0.1:8000/budget/dashboard",
+        "access_token": "access-development-bcb77a00-4e57-4bd5-8e74-6df3e064a0ab",
+        "redirect_uri": "https://127.0.0.1:8000/budget/oauth.html"
+    }
+
+    r = requests.post(url, headers=headers, json=data).json()
+    print(r)
+
+
+
+
 
 
     # Saving total checking and savings balances
@@ -353,3 +383,24 @@ def accounts(request):
 def notifications(request):
     user = request.user
     return render(request, 'Budget/notifications.html')
+
+
+
+
+
+
+def index(request):
+    rooms = Room.objects.all()
+    return render(request, 'Budget/chat/index.html', {'rooms': rooms})
+
+def create_room(request):
+    if request.method == 'POST':
+        room_name = request.POST['room_name']
+        Room.objects.create(name=room_name)
+        return redirect('Budget:index')
+    return render(request, 'Budget/chat/create_room.html')
+
+def join_room(request, room_name):
+    room = Room.objects.get(name=room_name)
+    return render(request, 'Budget/chat/room.html', {'room': room})
+

@@ -1,0 +1,107 @@
+{% extends 'Budget/chat/base.html' %}
+
+{% block content %}
+  <h2>{{ room.name }}</h2>
+  <div id="video-container">
+    <video id="local-video" autoplay playsinline></video>
+    <video id="remote-video" autoplay playsinline></video>
+  </div>
+  <div id="chat-messages">
+    <!-- Chat messages will be displayed here -->
+  </div>
+  <form id="chat-form">
+    <input type="text" id="message" autocomplete="off" required>
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    // Add your JavaScript code for WebSocket communication (same as previous response)
+// Add your JavaScript code for WebSocket communication
+    const roomName = "{{ room.name }}";
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+    );
+
+
+    // WebRTC code starts here
+    const localVideo = document.getElementById('local-video');
+    const remoteVideo = document.getElementById('remote-video');
+
+    const configuration = {
+      'iceServers': [{
+        'urls': 'stun:stun.l.google.com:19302'
+      }]
+    };
+
+    const localPeerConnection = new RTCPeerConnection(configuration);
+
+    localPeerConnection.onicecandidate = function(event) {
+      if (event.candidate) {
+        chatSocket.send(JSON.stringify({
+          'ice_candidate': event.candidate
+        }));
+      }
+    };
+
+    localPeerConnection.ontrack = function(event) {
+      remoteVideo.srcObject = event.streams[0];
+    };
+
+    async function init() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
+        localVideo.srcObject = stream;
+        stream.getTracks().forEach(track => localPeerConnection.addTrack(track, stream));
+      } catch (err) {
+        console.error('Error initializing WebRTC: ', err);
+      }
+    }
+
+    async function createOffer() {
+      try {
+        const offer = await localPeerConnection.createOffer();
+        await localPeerConnection.setLocalDescription(offer);
+        chatSocket.send(JSON.stringify({
+          'offer': offer
+        }));
+      } catch (err) {
+        console.error('Error creating offer: ', err);
+      }
+    }
+
+    async function handleAnswer(answer) {
+      await localPeerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+    }
+
+    async function handleIceCandidate(candidate) {
+      await localPeerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+
+    chatSocket.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+
+      if (data.offer) {
+        handleAnswer(data.offer);
+      } else if (data.answer) {
+        handleAnswer(data.answer);
+      } else if (data.ice_candidate) {
+        handleIceCandidate(data.ice_candidate);
+      } else {
+        // Handle text chat messages (same as previous response)
+      }
+    };
+
+    // Initialize WebRTC
+    init().then(() => {
+      // Create an offer after a delay to ensure the WebSocket is connected
+      setTimeout(() => {
+        createOffer();
+      }, 1000);
+    });
+
+
+
+
+
+  </script>
+{% endblock %}

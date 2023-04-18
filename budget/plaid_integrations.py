@@ -46,6 +46,7 @@ def plaid_get_account_balance(CLIENT_ID, SECRET, token, start_date, end_date):
     # Transaction data received
     balances = requests.post(url, headers=headers, json=data).json()
     print(balances)
+    print(balances)
     all_account_balances = 0
     for account in balances['accounts']:
         avaliable = account['balances']['available']

@@ -1,0 +1,11 @@
+{% extends 'Budget/chat/base.html' %}
+
+{% block content %}
+  <h2>Rooms</h2>
+  <ul>
+    {% for room in rooms %}
+      <li><a href="{% url 'Budget:join_room' room_name=room.name %}">{{ room.name }}</a></li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'Budget:create_room' %}">Create Room</a>
+{% endblock %}
