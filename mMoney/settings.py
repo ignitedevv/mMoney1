@@ -82,6 +82,7 @@ WSGI_APPLICATION = 'mMoney.wsgi.application'
 
 ASGI_APPLICATION = 'mMoney.routing.application'
 
+# Channels settings
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

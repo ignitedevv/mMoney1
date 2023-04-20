@@ -81,3 +81,33 @@ def savings_calculator(current_savings, monthly_income, monthly_expenses, target
 
 def extract_numbers(s):
     return ''.join([char for char in s if char.isdigit()])
+
+
+
+from datetime import datetime, timedelta
+
+def add_month(date_str):
+    date_format = "%Y-%m-%d"
+    date_obj = datetime.strptime(date_str, date_format)
+
+    # Add a month to the date
+    try:
+        new_date_obj = date_obj.replace(month=date_obj.month + 1)
+    except ValueError:
+        # Handle cases when the next month is in the next year
+        if date_obj.month == 12:
+            new_date_obj = date_obj.replace(year=date_obj.year + 1, month=1)
+        else:
+            # Handle cases when the next month has fewer days
+            last_day_of_next_month = (date_obj.replace(month=date_obj.month + 2, day=1) - timedelta(days=1)).day
+            new_date_obj = date_obj.replace(month=date_obj.month + 1, day=last_day_of_next_month)
+
+    return new_date_obj.strftime(date_format)
+
+def days_to_date(date_str):
+    date_format = "%Y-%m-%d"
+    target_date = datetime.strptime(date_str, date_format)
+    current_date = datetime.now()
+
+    delta = target_date - current_date
+    return delta.days

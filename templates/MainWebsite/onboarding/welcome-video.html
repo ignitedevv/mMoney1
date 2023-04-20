@@ -1,0 +1,15 @@
+{% extends 'MainWebsite/base.html' %}
+
+{% block content %}
+  <div class="my-section _40px-up onboarding">
+    <div class="my-container white">
+      <h1 class="heading-11">Welcome to mMoney</h1>
+      <iframe src="https://www.w3schools.com" title="W3Schools Free Online Web Tutorials" width="100%" height="500px"></iframe>
+
+      <div class="buttons-wrapper" style="padding-top: 20px">
+        <a href="{% url 'MainWebsite:onboarding-free' %}" class="button-3 back ">Back</a>
+        <a href="{% url 'Budget:budget-dashboard' %}" class="button-3 next ">Next</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

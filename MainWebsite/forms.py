@@ -10,7 +10,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ['email', 'first_name', 'last_name']
+        fields = ['email', 'first_name', 'last_name', 'accounts']
 
 class CreateBudgetUserForm(forms.ModelForm):
 

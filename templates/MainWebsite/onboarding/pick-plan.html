@@ -1,33 +1,65 @@
 {% extends 'MainWebsite/base.html' %}
 
 {% block content %}
-<div class="section wf-section">
-    <div class="w-row">
-      <div class="w-col w-col-6">
-        <h1 class="register-text large">Spend less time filling out<br>forms and more time<br>optimizing performance.</h1>
-        <h1 class="register-text medium">Spend less time filling out forms and more time<br>optimizing performance.</h1>
-      </div>
-      <div class="column-3 w-col w-col-6">
-        <div class="div-block-5">
-          <div class="div-block-6">
-            <h1 class="heading-5">Get Started Today!</h1>
-            <div class="form-block-2 w-form">
-              <form id="email-form" name="email-form" data-name="Email Form" method="Post" class="form-2">
-                  {% csrf_token %}
-                  <input type="text" class="input-field w-input" maxlength="256" name="first" data-name="Name" placeholder="First Name" id="name">
-                  <input type="text" class="input-field w-input" maxlength="256" name="last" data-name="Email" placeholder="Last Name" id="email" required="">
-                  <input type="text" class="input-field w-input" maxlength="256" name="email" data-name="Email 2" placeholder="Email" id="email-2" required="">
-                  <input type="password" class="input-field w-input" maxlength="256" name="password" data-name="Email 2" placeholder="Password" id="email-2" required="">
-                  <input type="password" class="input-field w-input" maxlength="256" name="password2" data-name="Email 2" placeholder="Confirm Password" id="email-2" required="">
-                  <input type="submit" value="Submit" data-wait="Please wait..." class="submit-button" style="color: white;">
-              </form>
-            </div>
+  <div class="section wf-section">
+    <h1 class="heading-6">Pick A Plan</h1>
+    <div class="w-layout-grid grid">
+      <div id="w-node-_298015e6-c483-ff70-b1f2-24255f2f735b-971bc838" class="plan-card"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="95" alt="" class="image-4">
+        <h1 class="heading-9">Basic</h1>
+        <div class="bullets-container">
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Headingdadsfa sdfasdf asdf a sdfasdf asdfasdfasdf asdf a </h1>
+          </div>
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Heading</h1>
+          </div>
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Heading</h1>
           </div>
         </div>
+        <div class="bullet-wrapper">
+          <ul role="list" class="list"></ul>
+        </div>
+        <a href="{% url 'MainWebsite:onboarding-free' %}" class="button-2">Button Text</a>
+      </div>
+      <div id="w-node-_5722612c-ee56-8be7-6641-9838b9e2ece0-971bc838" class="plan-card"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="95" alt="" class="image-4">
+        <h1 class="heading-9">Basic</h1>
+        <div class="bullets-container">
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Headingdadsfa sdfasdf asdf a sdfasdf asdfasdfasdf asdf a </h1>
+          </div>
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Heading</h1>
+          </div>
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Heading</h1>
+          </div>
+        </div>
+        <div class="bullet-wrapper">
+          <ul role="list" class="list"></ul>
+        </div>
+        <a href="#" class="button-2">Button Text</a>
+      </div>
+      <div id="w-node-_3768367a-d628-147c-945b-88d27e44e0a0-971bc838" class="plan-card"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="95" alt="" class="image-4">
+        <h1 class="heading-9">Basic</h1>
+        <div class="bullets-container">
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Headingdadsfa sdfasdf asdf a sdfasdf asdfasdfasdf asdf a </h1>
+          </div>
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Heading</h1>
+          </div>
+          <div class="bullet"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="37" alt="" class="image-3">
+            <h1 class="heading-10">Heading</h1>
+          </div>
+        </div>
+        <div class="bullet-wrapper">
+          <ul role="list" class="list"></ul>
+        </div>
+        <a href="#" class="button-2">Button Text</a>
       </div>
     </div>
   </div>
-
 
 
 {% endblock %}

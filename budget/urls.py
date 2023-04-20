@@ -13,7 +13,7 @@ urlpatterns = [
     path('refresh', views.refresh, name='budget-refresh'),
 
     # dashboard
-    path('dashboard', views.budget_dashboard, name='budget-dashboard'),
+    path('dashboard/', views.budget_dashboard, name='budget-dashboard'),
 
     # Goals
     path('goals', views.goals, name='budget-goals'),
@@ -21,7 +21,8 @@ urlpatterns = [
     path(r'my-goal/<str:id>', views.view_goal, name='budget-viewGoals'),
 
     # transactions
-    path('transactions', views.transactions, name='budget-transactions'),
+    path('transactions/', views.transactions, name='budget-transactions'),
+    path('all_rec_payments/', views.rec_payments_all, name='rec-transactions'),
 
     # Budget
     path('budget', views.budget, name='budget-budget'),
@@ -39,15 +40,14 @@ urlpatterns = [
 
     # Plaid Authentication
     path('o-auth', views.oauth, name='budget-oauth'),
+    path('update/', views.update_plaid, name='budget-update'),
+
 
     # Page for Howy
     path('howy', howy_views.handle_input, name='howy-chat'),
     path('howy-handler', howy_form_handeler.handle_sent_forms, name='howy-handler'),
 
-    path('', views.index, name='index'),
-    path('create/', views.create_room, name='create_room'),
-    path('<str:room_name>/', views.join_room, name='join_room'),
-
+    path('video_call/', views.index, name='index'),
 
 
 ]

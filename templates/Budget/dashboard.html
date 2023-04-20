@@ -3,179 +3,306 @@
 {% load mathfilters %}
 {% load humanize %}
 {% block content %}
-  <div class="section-banner wf-section">
-    <h1 class="heading-4">Dashboard</h1>
-  </div>
-  <div class="my-section wf-section">
+    <div class="my-section wf-section">
     <div class="my-container">
       <div class="w-row">
         <div class="column w-col w-col-4">
           <div class="item-wrapper">
             <h1 class="item-title">Accounts</h1>
-            <div class="white-item" onclick="display_under(this)">
-              <div class="account-item-wrapper">
-                <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="">
-                  <h1 class="_16px _10-padding-left light">Checking and Savings</h1>
+
+              <div class="white-item account">
+              <div class="account-item-wrapper" onclick="display_under(this)">
+                <div class="item-left-div left-padding"><img src="{% static 'images/checking-house@2x.png' %}" loading="lazy" width="29" alt="">
+                  <h1 class="_16px _10-padding-left light">Checking</h1>
                 </div>
                 <div>
-                  <h1 class="_16px amount-right">$ {{ checking_and_savings_total|intcomma }}</h1>
+                  <h1 class="_16px amount-right big">${{ checking_and_savings_total|intcomma }}</h1>
                 </div>
               </div>
-              <div class="diff-accounts-wrapper">
-                  <div class="account-wrapper">
-                  <div class="account-item-wrapper">
-                    <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="image">
-                      <h1 class="_16px light">Checking and Savings</h1>
+              <div class="specific-account-wrapper" style="display: none">
+                {% for account in checking_accounts %}
+                  <div class="account-item-wrapper margin">
+                  <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="accounts-img hidden">
+                    <div class="div-block-9">
+                      <h1 class="_16px _10-padding-left light">{{ account.name }}</h1>
+                      <h1 class="_16px _10-padding-left light company">{{ account.inst_name }}</h1>
                     </div>
+                  </div>
+                  <div>
                     <div>
-                      <h1 class="_16px amount-right light">$1,500</h1>
+                      <h1 class="_16px amount-right">${{ account.avaliable|intcomma }}</h1>
+                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
                     </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
-            <div class="white-item">
-              <div class="account-item-wrapper">
-                <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="">
-                  <h1 class="_16px _10-padding-left light">Credit Cards</h1>
+
+          <div class="white-item account">
+              <div class="account-item-wrapper" onclick="display_under(this)">
+                <div class="item-left-div left-padding"><img src="{% static 'images/card@2x copy.png' %}" loading="lazy" width="29" alt="">
+                  <h1 class="_16px _10-padding-left light">Savings</h1>
                 </div>
                 <div>
-                  <h1 class="_16px amount-right">$ {{ credit_avaliable }}</h1>
+                  <h1 class="_16px amount-right big">${{ savings_total|intcomma }}</h1>
                 </div>
               </div>
-              <div class="diff-accounts-wrapper">
-                <div class="account-wrapper">
-                  <div class="account-item-wrapper">
-                    <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="image">
-                      <h1 class="_16px light">Checking and Savings</h1>
+              <div class="specific-account-wrapper" style="display: none">
+                {% for account in savings_accounts %}
+                  <div class="account-item-wrapper margin">
+                  <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="accounts-img hidden">
+                    <div class="div-block-9">
+                      <h1 class="_16px _10-padding-left light">{{ account.name }}</h1>
+                      <h1 class="_16px _10-padding-left light company">{{ account.inst_name }}</h1>
                     </div>
+                  </div>
+                  <div>
                     <div>
-                      <h1 class="_16px amount-right light">$1,500</h1>
+                      <h1 class="_16px amount-right">${{ account.avaliable|intcomma }}</h1>
+                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
                     </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
-            <div class="white-item">
-              <div class="account-item-wrapper">
-                <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="">
+
+          <div class="white-item account">
+              <div class="account-item-wrapper" onclick="display_under(this)">
+                <div class="item-left-div left-padding"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="">
                   <h1 class="_16px _10-padding-left light">Investments</h1>
                 </div>
                 <div>
-                  <h1 class="_16px amount-right">$ {{ investments }}</h1>
+                  <h1 class="_16px amount-right big">${{ investments|intcomma }}</h1>
                 </div>
               </div>
-              <div class="diff-accounts-wrapper">
-                <div class="account-wrapper">
-                  <div class="account-item-wrapper">
-                    <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="image">
-                      <h1 class="_16px light">Checking and Savings</h1>
+              <div class="specific-account-wrapper" style="display: none">
+                {% for account in investment_accounts %}
+                  <div class="account-item-wrapper margin">
+                  <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="accounts-img hidden">
+                    <div class="div-block-9">
+                      <h1 class="_16px _10-padding-left light">{{ account.name }}</h1>
+                      <h1 class="_16px _10-padding-left light company">{{ account.inst_name }}</h1>
                     </div>
+                  </div>
+                  <div>
                     <div>
-                      <h1 class="_16px amount-right light">$1,500</h1>
+                      <h1 class="_16px amount-right">${{ account.balances.current|intcomma }}</h1>
+                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
                     </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
-            <div class="white-item">
-              <div class="account-item-wrapper">
-                <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="">
-                  <h1 class="_16px _10-padding-left light">Loans</h1>
+
+          <div class="white-item account">
+              <div class="account-item-wrapper" onclick="display_under(this)">
+                <div class="item-left-div left-padding"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="">
+                  <h1 class="_16px _10-padding-left light">Debt</h1>
                 </div>
                 <div>
-                  <h1 class="_16px amount-right">$1,500</h1>
+                  <h1 class="_16px amount-right big">${{ loans|intcomma }}</h1>
                 </div>
               </div>
-              <div class="diff-accounts-wrapper">
-                <div class="account-wrapper">
-                  <div class="account-item-wrapper">
-                    <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="image">
-                      <h1 class="_16px light">Checking and Savings</h1>
+              <div class="specific-account-wrapper" style="display: none">
+                {% for account in checking_accounts %}
+                  <div class="account-item-wrapper margin">
+                  <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="accounts-img hidden">
+                    <div class="div-block-9">
+                      <h1 class="_16px _10-padding-left light">{{ account.name }}</h1>
+                      <h1 class="_16px _10-padding-left light company">{{ account.inst_name }}</h1>
                     </div>
+                  </div>
+                  <div>
                     <div>
-                      <h1 class="_16px amount-right light">$1,500</h1>
+                      <h1 class="_16px amount-right">${{ account.avaliable|intcomma }}</h1>
+                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
                     </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
-            <div class="white-item">
-              <div class="account-item-wrapper">
-                <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="">
+
+          <div class="white-item account">
+              <div class="account-item-wrapper" onclick="display_under(this)">
+                <div class="item-left-div left-padding"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="">
                   <h1 class="_16px _10-padding-left light">Real Estate</h1>
                 </div>
                 <div>
-                  <h1 class="_16px amount-right">$1,500</h1>
+                  <h1 class="_16px amount-right big">${{ real_estate|intcomma }}</h1>
                 </div>
               </div>
-              <div class="diff-accounts-wrapper">
-                <div class="account-wrapper">
-                  <div class="account-item-wrapper">
-                    <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="image">
-                      <h1 class="_16px light">Checking and Savings</h1>
+              <div class="specific-account-wrapper" style="display: none">
+                {% for account in checking_accounts %}
+                  <div class="account-item-wrapper margin">
+                  <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="accounts-img hidden">
+                    <div class="div-block-9">
+                      <h1 class="_16px _10-padding-left light">{{ account.name }}</h1>
+                      <h1 class="_16px _10-padding-left light company">{{ account.inst_name }}</h1>
                     </div>
+                  </div>
+                  <div>
                     <div>
-                      <h1 class="_16px amount-right light">$1,500</h1>
+                      <h1 class="_16px amount-right">${{ account.avaliable|intcomma }}</h1>
+                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
                     </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
             </div>
-            <div class="white-item total">
-              <div class="diff-accounts-wrapper">
-                <div class="account-wrapper">
-                  <div class="account-item-wrapper">
-                    <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="image">
-                      <h1 class="_16px light">Checking and Savings</h1>
-                    </div>
-                    <div>
-                      <h1 class="_16px amount-right light">$1,500</h1>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h1 class="total-tag">Net Worth:</h1>
-              <h1 class="account-totals">$25,151</h1>
-            </div>
+
+
+          </div>
+          <div class="white-item total">
+            <h1 class="total-tag">Net Worth:</h1>
+            <h1 class="account-totals">$25,151</h1>
           </div>
         </div>
         <div class="column-2 w-col w-col-8">
           <div class="item-wrapper">
             <h1 class="item-title">Net Worth </h1>
-            <div class="white-item"></div>
+            <div class="white-item">
+              <div class="w-embed w-script">
+                <div>
+                  <canvas id="myChart"></canvas>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+  const ctx = document.getElementById('myChart');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+              </div>
+            </div>
           </div>
           <div class="item-wrapper">
-            <h1 class="item-title">Notifications</h1>
-            <div class="white-item"></div>
+            <div class="div-block-11">
+              <h1 class="item-title">Upcoming Payments</h1>
+              <a href="{% url 'Budget:rec-transactions' %}"><h1 class="item-title see-more"> - See More</h1></a>
+            </div>
+            <div class="upcoming-payments-wrapper" >
+              <div class="w-layout-grid grid-2">
+
+                  {% for payment in sorted_recc_data %}
+                      {% if payment.numdays %}
+                  <div id="w-node-_6ae10de7-db6d-4ce3-b569-2bd542d09be6-0cde150c" class="white-item upcoming-payment"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="92" id="w-node-_6c80b9b4-4b57-a761-643a-820a900a0ceb-0cde150c" alt="" class="image-8">
+                      <h1 class="_16px regular">{{ payment.merchant_name }}</h1>
+                      <h1 class="_16px payment-day">{{ payment.numdays }} days</h1>
+                </div>
+                      {% endif %}
+                {% endfor %}
+              </div>
+            </div>
           </div>
           <div class="item-wrapper">
-            <h1 class="item-title">Top Goals</h1>
-            <div class="white-item"></div>
+            <div class="div-block-11">
+              <h1 class="item-title">Top Goals</h1>
+              <a href="{% url 'Budget:budget-goals' %}"> <h1 class="item-title see-more">- See More</h1></a>
+            </div>
+
+              {% for goal in goals %}
+              <div class="white-item goal">
+              <div class="left-goal"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="48" alt="" class="image-6">
+                <h1 class="_16px goal-title">{{ goal.title }}</h1>
+              </div>
+              <div class="right-goal">
+                <h1 class="_16px amount-right big padding-right"><span class="text-span">${{ goal.current_amount|intcomma }}</span> / ${{ goal.cost|intcomma }}</h1>
+                <div class="div-block-10">
+                  <h1 class="_16px amount-right big">68</h1>
+                  <h1 class="_16px amount-right more-days">More Days</h1>
+                </div>
+              </div>
+            </div>
+              {% endfor %}
           </div>
           <div class="item-wrapper">
-            <h1 class="item-title">Recent Transactions</h1>
-            <div class="white-item"></div>
+            <div class="div-block-11">
+              <h1 class="item-title">My Budgets</h1>
+              <a href="{% url 'Budget:budget-budget' %}"> <h1 class="item-title see-more">- See More</h1></a>
+            </div>
+
+              {% for budget in budgets %}
+              <div class="white-item budget">
+              <div class="div-block-12">
+                <div class="left-goal"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="48" alt="" class="image-6">
+                  <h1 class="_16px goal-title">{{ budget.title }}</h1>
+                </div>
+                <h1 class="_16px amount-right big"><span class="text-span">$100</span> / $23,041</h1>
+              </div>
+              <div class="progress-bar-wrapper">
+                <div class="progress-bar"></div>
+              </div>
+              <div class="right-goal">
+                <div class="div-block-10 hidden">
+                  <h1 class="_16px amount-right big">68</h1>
+                  <h1 class="_16px amount-right more-days">More Days</h1>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
           </div>
           <div class="item-wrapper">
-            <h1 class="item-title">Investments</h1>
-            <div class="white-item"></div>
-          </div>
-          <div class="item-wrapper">
-            <h1 class="item-title">Budget Adherence </h1>
-            <div class="white-item"></div>
+            <div class="div-block-11">
+              <h1 class="item-title">Investments</h1>
+              <h1 class="item-title see-more">- See More</h1>
+            </div>
+            <div class="white-item">
+              <div class="w-embed w-script">
+                <div>
+                  <canvas id="myChart"></canvas>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+  const ctx = document.getElementById('myChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-    <script src="{% static 'budget/js/script.js' %}" type="text/javascript"></script>
-
-  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=6420a45e9155221edd9d7c07" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  <script src="js/webflow.js" type="text/javascript"></script>
-  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
-</body>
 
 
+<script src="{% static 'budget/js/script.js' %}" type="text/javascript"></script>
+<script src="{% static 'budget/js/dashboard.js' %}" type="text/javascript"></script>
 
 {% endblock %}

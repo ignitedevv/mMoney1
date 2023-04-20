@@ -76,6 +76,10 @@ class Account(AbstractBaseUser):
         return self.user_id
 
 
+    accounts = models.JSONField(null=True, blank=True)
+
+    def get_user_accounts(self):
+        return self.accounts
 
 
 
@@ -90,6 +94,7 @@ class BudgetUsers(models.Model):
     users_id = models.CharField(max_length=100, null=True, blank=True)
     networth_timeline = models.JSONField(null=True, blank=True)
     checking_savings_total = models.FloatField(null=True, blank=True)
+    savings_total = models.FloatField(null=True, blank=True)
     credit_avaliable = models.FloatField(null=True, blank=True)
     investments = models.FloatField(null=True, blank=True)
     loans = models.FloatField(null=True, blank=True)

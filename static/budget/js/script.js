@@ -26,7 +26,7 @@ function sendTransaction(a, tran_id, cat1, cat2) {
 
     $.ajax({
       type: "POST",
-      url: '/budget/transactions',
+      url: '/budget/transactions/',
       data: {
         csrfmiddlewaretoken: csrf,
         action: "post",
@@ -58,10 +58,23 @@ function transactionsToggle(a, target) {
 
 
 function display_under(a) {
-    a.children[1].style.display = 'block'
-
+    console.log('test')
+    console.log(a.parentElement.children[1])
+    if (a.parentElement.children[1].style.display === 'none') {
+        a.parentElement.children[1].style.display = 'block'
+        a.className = 'account-item-wrapper selected'
+    } else if (a.parentElement.children[1].style.display === 'block') {
+        a.parentElement.children[1].style.display = 'none'
+        a.className = 'account-item-wrapper'
+    }
 }
 
+
+function hideDisplay(a) {
+    console.log('test')
+    console.log(a.parentElement.children[1])
+
+}
 
 
 

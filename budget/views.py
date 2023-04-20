@@ -5,11 +5,13 @@ import environ
 import requests
 from .forms import UpdateChangedTransactions, AddBudgetForm
 import random
-from .plaid_integrations import plaid_get_Transactions, plaid_get_account_balance
-from .functions import package_transaction
+from .plaid_integrations import plaid_get_Transactions, plaid_get_checking_account_balance, get_checking_accounts, plaid_get_accounts, plaid_get_rec_payments, plaid_updpate, get_savings_accounts, plaid_get_savings_account_balance
+from .plaid_integrations import get_investment_account_balances, plaid_get_investment_accounts
+from .functions import package_transaction, add_month, days_to_date
 import datetime as dt
 from django.shortcuts import render, redirect
 from .models import Room
+import calendar
 
 # creating env object
 env = environ.Env()
@@ -37,7 +39,7 @@ def addAccount(request):
         "secret": f"{SECRET}",
         "client_name": "mMoney",
         "user": {"client_user_id": f"{user_id}"},
-        "products": ["auth"],
+        "products": ["auth", "investments"],
         "country_codes": ["US"],
         "language": "en",
         "webhook": "https://127.0.0.1:8000/budget/dashboard",
@@ -52,6 +54,62 @@ def addAccount(request):
     }
 
     return render(request, 'Budget/add_account.html', context=context)
+
+
+# Recouring payments page
+def rec_payments_all(request):
+    # Collecting dates
+    current_date = dt.date.today()
+    start_date = str(current_date).split("-")
+    start_date[1] = '01'
+    start_date = '-'.join(start_date)
+
+    year = current_date.year
+
+
+
+    month = current_date.month
+    current_month = calendar.monthrange(year, month)[1]
+    print(current_month)
+    print(current_date)
+
+    # This month
+    month = current_date.month - 1
+    last_month = calendar.monthrange(year, month)[1]
+    print(last_month)
+
+
+    date_str = f'2023-{month}-{last_month}'
+    date_obj = dt.datetime.strptime(date_str, '%Y-%m-%d')
+    day = date_obj.strftime('%A')
+    print(day)
+
+    accounts = plaid_get_accounts(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', start_date, current_date)
+    reccPayments = plaid_get_rec_payments(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', accounts)[
+        'outflow_streams']
+    sorted_recc_data = sorted(reccPayments, key=lambda x: dt.datetime.strptime(x['first_date'], '%Y-%m-%d'))
+
+    for data in sorted_recc_data:
+        print(data['is_active'])
+        if data['is_active'] == True:
+            first_date = data['first_date']
+            last_date = data['last_date']
+            date_str = add_month(f"{last_date}")
+            days_remaining = days_to_date(date_str)
+            data['numdays'] = days_remaining
+
+
+
+    context = {
+        'sorted_recc_data': sorted_recc_data,
+        'day_of_week': day,
+        'last_month_lastday': last_month,
+        'current_date_lastday': current_month
+
+    }
+
+    return render(request, 'Budget/upcoming payments/all_upcoming_payments.html', context=context)
+
 
 
 
@@ -82,10 +140,34 @@ def oauth(request):
 
         access_token = r.json()['access_token']
 
+        accounts = Account.objects.get(user_id=user_id)
+        accounts.accounts['accounts'].append(r.json())
+        accounts.save()
+
+
         print(access_token)
 
     return render(request, 'Budget/oauth.html')
 
+
+
+
+
+
+
+
+# For updating link token
+def update_plaid(request):
+    link_token = (plaid_updpate(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', '123'))
+
+    context = {
+        'link_token': link_token
+    }
+
+    return render(request, 'Budget/token_update.html', context=context)
+
+
+# Refreshing data
 def refresh(request):
     print('REFRESH')
     user = request.user
@@ -104,34 +186,53 @@ def refresh(request):
         'Content-Type': 'application/json'
     }
 
-    CLIENT_ID = '64233564b2767700140073ac'
-    SECRET = 'cd964c942048169ce2eb7d73800c82'
-
-    data = {
-        "client_id": f"{CLIENT_ID}",
-        "secret": f"{SECRET}",
-        "client_name": "mMoney",
-        "user": {"client_user_id": "123"},
-        "country_codes": ["US"],
-        "language": "en",
-        "webhook": "https://127.0.0.1:8000/budget/dashboard",
-        "access_token": "access-development-bcb77a00-4e57-4bd5-8e74-6df3e064a0ab",
-        "redirect_uri": "https://127.0.0.1:8000/budget/oauth.html"
-    }
-
-    r = requests.post(url, headers=headers, json=data).json()
-    print(r)
-
-
-
-
 
 
     # Saving total checking and savings balances
-    balances = plaid_get_account_balance(CLIENT_ID, SECRET, 'access-development-bcb77a00-4e57-4bd5-8e74-6df3e064a0ab', start_date, current_date)
+    balances = plaid_get_checking_account_balance(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', start_date, current_date)
+    savings_accounts = get_savings_accounts(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', start_date, current_date)
+    investment_accounts = get_investment_account_balances(CLIENT_ID, SECRET, 'access-development-6e0f7b45-e3e5-4a64-89b3-c5bf14be3d5b')
+
+
+
+    # For handling to see if there are savings accounts
+    if savings_accounts == []:
+        budget_user.savings_total = 0.0
+        budget_user.save()
+    else:
+        budget_user.savings_total = plaid_get_savings_account_balance(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', start_date, current_date)
+
+    # for handeling to see if there are investment accounts
+    if investment_accounts == []:
+        budget_user.investments = 0.0
+        budget_user.save()
+    else:
+        budget_user.investments = get_investment_account_balances(CLIENT_ID, SECRET, 'access-development-6e0f7b45-e3e5-4a64-89b3-c5bf14be3d5b')
+        budget_user.save()
+
+
     budget_user.checking_savings_total = balances
     budget_user.save()
     print('saved')
+
+    # Code for getting reacurring payments
+    accounts = plaid_get_accounts(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55',
+                                  start_date, current_date)
+    reccPayments = plaid_get_rec_payments(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', accounts)
+    print(reccPayments['inflow_streams'])
+    total_income = 0.0
+    for i in reccPayments['inflow_streams']:
+        if i['is_active'] == True:
+            print(i['average_amount']['amount'])
+            total_income += float(i['average_amount']['amount'])
+    budget_user.average_income = total_income
+    budget_user.save()
+
+
+
+
+
+
 
     return redirect('/budget/dashboard')
 
@@ -143,39 +244,73 @@ def budget_dashboard(request):
     user_id = account.model.get_user_id(self=user)
     budget_user = BudgetUsers.objects.get(users_id=user_id)
     checking_and_savings_total = budget_user.checking_savings_total
+    savings_total = budget_user.savings_total
     credit_avaliable = budget_user.credit_avaliable
     investments = budget_user.investments
     loans = budget_user.loans
     real_estate = budget_user.real_estate
     bank_accounts = BankAccount.objects.filter(users_id=user_id)
-
     goals = Goal.objects.filter(users_id=user_id)
-    current_date = dt.date.today()
+    budgets = BudgetItems.objects.filter(users_id=user_id)
 
+
+
+
+    # Collecting dates
+    current_date = dt.date.today()
     start_date = str(current_date).split("-")
     start_date[1] = '01'
     start_date = '-'.join(start_date)
     print(start_date)
 
 
-
-    print(bank_accounts)
     # receiving AJAX from changing a transaction category
     if request.POST.get('action') == 'post':
         public = request.POST
         print(public)
 
+
+
+    # Code to get packaged checking / savings accounts
+    checking_accounts = get_checking_accounts(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', start_date, current_date)
+    savings_accounts = get_savings_accounts(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', start_date, current_date)
+    investment_accounts = plaid_get_investment_accounts(CLIENT_ID, SECRET, 'access-development-6e0f7b45-e3e5-4a64-89b3-c5bf14be3d5b')
+
+    # Code for getting reacurring payments
+    accounts = plaid_get_accounts(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', start_date, current_date)
+    reccPayments = plaid_get_rec_payments(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', accounts)['outflow_streams']
+    sorted_recc_data = sorted(reccPayments, key=lambda x: dt.datetime.strptime(x['first_date'], '%Y-%m-%d'))
+    for data in sorted_recc_data:
+        print(data['is_active'])
+        if data['is_active'] == True:
+            first_date = data['first_date']
+            last_date = data['last_date']
+            date_str = add_month(f"{last_date}")
+            days_remaining = days_to_date(date_str)
+            print(f"It will take {days_remaining} days to get to {date_str}.")
+            data['numdays'] = days_remaining
+            print(data)
+
+
     context = {
-        'transaction_data': transactions,
+        'checking_accounts': checking_accounts,
+        'savings_accounts': savings_accounts,
+        'savings_total': savings_total,
         'checking_and_savings_total': checking_and_savings_total,
         'credit_avaliable': credit_avaliable,
+        'investment_accounts': investment_accounts,
         'investments': investments,
         'loans': loans,
-        'real_estate': real_estate
+        'real_estate': real_estate,
+        'sorted_recc_data': sorted_recc_data,
+        'goals': goals,
+        'budgets': budgets
+
     }
 
 
     return render(request, 'Budget/dashboard.html', context=context)
+
 
 # Goals Page
 def goals(request):
@@ -227,7 +362,7 @@ def transactions(request):
     print(start_date)
 
 
-    transaction_data = plaid_get_Transactions(CLIENT_ID, SECRET, 'access-development-bcb77a00-4e57-4bd5-8e74-6df3e064a0ab', start_date, current_date)['transactions']
+    transaction_data = plaid_get_Transactions(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', start_date, current_date)['transactions']
 
     for transaction in transaction_data:
         print(transaction['transaction_id'])
@@ -385,22 +520,5 @@ def notifications(request):
     return render(request, 'Budget/notifications.html')
 
 
-
-
-
-
 def index(request):
-    rooms = Room.objects.all()
-    return render(request, 'chat/index.html', {'rooms': rooms})
-
-def create_room(request):
-    if request.method == 'POST':
-        room_name = request.POST['room_name']
-        Room.objects.create(name=room_name)
-        return redirect('Budget:index')
-    return render(request, 'chat/create_room.html')
-
-def join_room(request, room_name):
-    room = Room.objects.get(name=room_name)
-    return render(request, 'chat/room.html', {'room': room})
-
+    return render(request, 'chat/index.html')

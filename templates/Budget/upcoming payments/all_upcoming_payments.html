@@ -1,4 +1,8 @@
-<body class="body">
+{% extends 'Budget/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
   <div class="my-section wf-section">
     <div class="my-container">
       <div class="w-row">
@@ -8,25 +12,25 @@
             <div class="white-item">
               <div class="w-layout-grid grid-3">
                 <div id="w-node-a27dbd74-d0aa-a7e4-e207-6e60752d16ae-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">Sun</h6>
+                  <h6 class="heading-12 title">Sun</h6>
                 </div>
                 <div id="w-node-_3992d48c-cc9d-e5da-5e40-14dc29aaf811-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">Mon</h6>
+                  <h6 class="heading-12 title">Mon</h6>
                 </div>
                 <div id="w-node-_253938d4-eb15-74c7-9997-446f984ffc90-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">Tue</h6>
+                  <h6 class="heading-12 title">Tue</h6>
                 </div>
                 <div id="w-node-f22b7a18-6497-350e-19ff-de5432a7f4de-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">Wed</h6>
+                  <h6 class="heading-12 title">Wed</h6>
                 </div>
                 <div id="w-node-_7e78c4d0-6058-637f-05ff-994bf8743643-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">Thu</h6>
+                  <h6 class="heading-12 title">Thu</h6>
                 </div>
                 <div id="w-node-_5b9fc057-2f68-a782-2afe-24972f61a4fc-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">Fri</h6>
+                  <h6 class="heading-12 title">Fri</h6>
                 </div>
                 <div id="w-node-_8c821d84-060f-feb5-40b8-1e6d49c1fd59-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">Sat</h6>
+                  <h6 class="heading-12 title">Sat</h6>
                 </div>
               </div>
               <div class="w-layout-grid grid-3">
@@ -37,124 +41,124 @@
                   <h6 class="heading-12 notinmonth">2</h6>
                 </div>
                 <div id="w-node-_90be2d40-5142-f3c6-f86e-195f7e36f7a1-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">3</h6>
+                  <h6 class="heading-12 notinmonth">3</h6>
                 </div>
                 <div id="w-node-_90be2d40-5142-f3c6-f86e-195f7e36f7a4-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">4</h6>
+                  <h6 class="heading-12 notinmonth">4</h6>
                 </div>
                 <div id="w-node-_90be2d40-5142-f3c6-f86e-195f7e36f7a7-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">5</h6>
+                  <h6 class="heading-12 notinmonth">5</h6>
                 </div>
                 <div id="w-node-_90be2d40-5142-f3c6-f86e-195f7e36f7aa-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">6</h6>
+                  <h6 class="heading-12 notinmonth">6</h6>
                 </div>
                 <div id="w-node-_90be2d40-5142-f3c6-f86e-195f7e36f7ad-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-c9258853-dd0d-cf03-6ec3-02c9abf28085-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_377048dd-2c4a-bd5e-f6cf-dfdd24ac34c7-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">8</h6>
+                  <h6 class="heading-12 notinmonth">8</h6>
                 </div>
                 <div id="w-node-_206cddae-55e4-002d-5db3-386c184a49bc-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">9</h6>
+                  <h6 class="heading-12 notinmonth">9</h6>
                 </div>
                 <div id="w-node-f0429c8e-abe0-8704-9328-b9774cae0b5d-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">10</h6>
+                  <h6 class="heading-12 notinmonth">10</h6>
                 </div>
                 <div id="w-node-bbe97abd-690b-1a0e-99bb-9096dda77ab7-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">11</h6>
+                  <h6 class="heading-12 notinmonth">11</h6>
                 </div>
                 <div id="w-node-_3e96402b-9212-c13b-cf46-1ff6d6a55570-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">12</h6>
+                  <h6 class="heading-12 notinmonth">12</h6>
                 </div>
                 <div id="w-node-ab8ed727-ae47-5da6-1a2b-e889484a5731-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">13</h6>
+                  <h6 class="heading-12 notinmonth">13</h6>
                 </div>
                 <div id="w-node-_4caec225-86a8-2210-ddec-4733c032bde5-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">14</h6>
+                  <h6 class="heading-12 notinmonth">14</h6>
                 </div>
                 <div id="w-node-afba5b6e-722a-c726-a667-7dacb5702b67-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">15</h6>
+                  <h6 class="heading-12 notinmonth">15</h6>
                 </div>
                 <div id="w-node-_100b5761-faaa-e9fe-84e6-d94125e089e4-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">16</h6>
+                  <h6 class="heading-12 notinmonth">16</h6>
                 </div>
                 <div id="w-node-cb854846-161e-02cd-b2db-159bc83020ef-1e3cbc8f" class="div-block-14 currentday">
-                  <h6 class="heading-12">17</h6>
+                  <h6 class="heading-12 notinmonth">17</h6>
                 </div>
                 <div id="w-node-_76614887-e956-9ed7-8bb9-0dabb450d48b-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">18</h6>
+                  <h6 class="heading-12 notinmonth">18</h6>
                 </div>
                 <div id="w-node-_50a196c0-eebe-ff8b-fbf6-16ceab3b1f96-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">19</h6>
+                  <h6 class="heading-12 notinmonth">19</h6>
                 </div>
                 <div id="w-node-_6ccb08ed-6666-6e19-1275-9cfc56f4089b-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">20</h6>
+                  <h6 class="heading-12 notinmonth">20</h6>
                 </div>
                 <div id="w-node-f8237467-7ec4-2ff4-da47-83ee5711c185-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_551fcf59-7d6a-9100-eb42-664260a543f0-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-e58456cb-bbe0-7b96-1c64-c5ef4187f4cc-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_23e1b8c3-acce-7787-3fb1-c336a660c5cf-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_21cec652-1df9-e27f-4545-c5b09f437aa2-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-ac6a1f5f-f6fe-92bc-dec0-289484a82b8e-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_4266623e-fb36-315f-8fda-b01e37fd0c16-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_5e8836ea-fc6e-504d-a9fa-f46399b48039-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-b5fc308a-845c-cced-13a4-d6116b8f5f84-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_8e5d4025-957e-4197-1c2b-ec9ca16dcde6-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_041437e7-8193-9899-71c3-0218fd3fd8d2-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_72a98002-bfd9-a617-de39-df7409e823e8-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_15da8cbe-4639-668c-553d-e618c25a4565-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-cfc0222e-ddfc-9f1e-2d72-d946be3cd3b8-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-ec01a6c9-0eb8-e5a5-6ef4-87f9dc28cc6e-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_1e2cc8b1-8063-406d-a50e-d12ec64d160b-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-a2f85434-814c-0fdf-665e-eff82f0efa7d-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-fae258d8-034e-e9c6-10d9-328a88959853-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_7a6241f1-b7a8-68e0-365e-0427ae390983-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_99da34f2-ddce-365b-a7b7-34065c897635-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
                 <div id="w-node-_9178538d-48b1-6b72-9ac4-fc0007cdcdcf-1e3cbc8f" class="div-block-14">
-                  <h6 class="heading-12">7</h6>
+                  <h6 class="heading-12 notinmonth">7</h6>
                 </div>
               </div>
             </div>
@@ -162,66 +166,86 @@
           <div class="item-wrapper">
             <h1 class="item-title">Insights</h1>
             <div class="white-item"></div>
-          </div><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="add">
+          </div><img src="{% static 'images/add@2x.png' %}" loading="lazy" alt="" class="add">
         </div>
         <div class="column-2 w-col w-col-8">
           <div class="item-wrapper">
             <h1 class="item-title">Net Worth </h1>
-            <div class="white-item recpaymentwrapper">
-              <div class="left-payment-wraptter"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="43" alt="" class="image-9">
+
+            {% for rec in sorted_recc_data %}
+                {% if rec.numdays %}
+              <div class="white-item recpaymentwrapper">
+              <div class="left-payment-wraptter"><img src="" loading="lazy" width="43" alt="" class="image-9">
                 <div class="div-block-13">
-                  <h1 class="_16px goal-title left">Pay off student loans</h1>
-                  <h1 class="_16px left gray">More Days</h1>
+                  <h1 class="_16px goal-title left">{{ rec.merchant_name }}</h1>
+                  <h1 class="_16px left gray">{{ rec.numdays }} days away</h1>
                 </div>
               </div>
-              <div class="right-payment-wrapper">
+              <div class="right-payment-wrapper hover" style="display: none" >
                 <a href="#" class="button-4 w-button">CANCEL PAYMENT</a>
                 <a href="#" class="button-4 w-button">MANAGE SUBSCRIPTION</a>
                 <h1 class="heading-13">DONE</h1>
               </div>
-              <div class="right-payment-wrapper hidden">
-                <h1 class="_16px amount-right big right-padding">$23,041</h1><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="image-10">
+              <div class="right-payment-wrapper ">
+                <h1 class="_16px amount-right big right-padding">${{ rec.average_amount.amount|intcomma }}</h1><img src="{% static 'images/edit-icon@2x.png' %}" loading="lazy" alt="" class="image-10">
               </div>
             </div>
-            <div class="white-item recpaymentwrapper">
-              <div class="left-payment-wraptter"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="43" alt="" class="image-9">
-                <div class="div-block-13">
-                  <h1 class="_16px goal-title left">Pay off student loans</h1>
-                  <h1 class="_16px left gray">More Days</h1>
-                </div>
-              </div>
-              <div class="right-payment-wrapper">
-                <h1 class="_16px amount-right big right-padding">$23,041</h1><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="image-10">
-              </div>
-            </div>
-            <div class="white-item recpaymentwrapper">
-              <div class="left-payment-wraptter"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="43" alt="" class="image-9">
-                <div class="div-block-13">
-                  <h1 class="_16px goal-title left">Pay off student loans</h1>
-                  <h1 class="_16px left gray">More Days</h1>
-                </div>
-              </div>
-              <div class="right-payment-wrapper">
-                <h1 class="_16px amount-right big right-padding">$23,041</h1><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="image-10">
-              </div>
-            </div>
-            <div class="white-item recpaymentwrapper">
-              <div class="left-payment-wraptter"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="43" alt="" class="image-9">
-                <div class="div-block-13">
-                  <h1 class="_16px goal-title left">Pay off student loans</h1>
-                  <h1 class="_16px left gray">More Days</h1>
-                </div>
-              </div>
-              <div class="right-payment-wrapper">
-                <h1 class="_16px amount-right big right-padding">$23,041</h1><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="image-10">
-              </div>
-            </div>
+                {% endif %}
+            {% endfor %}
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=6420a45e9155221edd9d7c07" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  <script src="js/webflow.js" type="text/javascript"></script>
-  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
-</body>
+
+<script>
+
+var dateElements = document.getElementsByClassName('heading-12 notinmonth')
+var lastmonthdate = '{{ last_month_lastday }}'
+var currentmonthdate = '{{ current_date_lastday }}'
+console.log(currentmonthdate)
+var dayofweek = '{{ day_of_week }}'
+
+days = {
+    'Sunday': 0,
+    'Monday': 1,
+    'Tuesday': 2,
+    'Wednesday': 3,
+    'Thursday': 4,
+    'Friday': 5,
+    'Saturday': 6
+}
+
+const day_value = days[dayofweek];
+dateElements[day_value].innerHTML = lastmonthdate
+
+var dayIndex = Number(lastmonthdate) - Number(day_value)
+for (let i = 0; i < day_value; i++) {
+    dateElements[i].innerHTML = dayIndex
+    dayIndex += 1
+}
+
+for (let i = day_value + 1; i < dateElements.length; i++) {
+    dateElements[i].innerHTML = i - day_value
+}
+
+
+
+console.log(day_value)
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
