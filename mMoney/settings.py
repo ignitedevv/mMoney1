@@ -4,6 +4,7 @@ import os
 import environ
 import django_on_heroku
 import dj_database_url
+import channels
 
 
 
@@ -84,11 +85,9 @@ ASGI_APPLICATION = 'mMoney.routing.application'
 
 # Channels settings
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],
-        },
+    "default": {
+        "BACKEND": "channels.layers.channel_layers",
+        "CONFIG": {},
     },
 }
 
