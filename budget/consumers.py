@@ -6,9 +6,10 @@ class VideoCallConsumer(AsyncWebsocketConsumer):
     print('connect')
 
     async def connect(self):
+        print('connect')
         await self.accept()
         VideoCallConsumer.users.add(self)
-        print('connect')
+
 
     async def disconnect(self, close_code):
         VideoCallConsumer.users.remove(self)

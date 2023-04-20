@@ -11,54 +11,13 @@
   </style>
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.3.1/dist/peerjs.min.js"></script>
 
-  <video id="localVideo" autoplay muted></video>
+
   <video id="remoteVideo" autoplay></video>
 
   <script>
-    const localVideo = document.getElementById("localVideo");
-    const remoteVideo = document.getElementById("remoteVideo");
+    const socket = new WebSocket("ws://" + window.location.host + "/budget/video_call/");
 
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-      localVideo.srcObject = stream;
-
-      const peer = new Peer();
-
-      peer.on("open", (id) => {
-        console.log("Peer ID:", id);
-
-        const socket = new WebSocket("wss://" + window.location.host + "/video_call/");
-        console.log("WebSocket URL:", socket);
-
-        socket.addEventListener("open", (event) => {
-          console.log("WebSocket connection opened:", event);
-
-          socket.send(JSON.stringify({ type: "join", peerId: id }));
-        });
-
-        socket.addEventListener("message", (event) => {
-          const data = JSON.parse(event.data);
-
-          if (data.type === "offer") {
-            const call = peer.call(data.peerId, stream);
-            call.on("stream", (remoteStream) => {
-              remoteVideo.srcObject = remoteStream;
-            });
-          }
-        });
-      });
-
-      peer.on("call", (call) => {
-        call.answer(stream);
-        call.on("stream", (remoteStream) => {
-          remoteVideo.srcObject = remoteStream;
-        });
-      });
-
-    }).catch((error) => {
-  console.error('Error accessing media devices:', error);
-});
 
 
 
@@ -66,7 +25,8 @@
 
 
   </script>
-    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.3.1/dist/peerjs.min.js"></script>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.3.1/dist/peerjs.min.js"></script>
+
 </html>
