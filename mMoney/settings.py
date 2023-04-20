@@ -82,7 +82,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mMoney.wsgi.application'
 
-ASGI_APPLICATION = 'mMoney.routing.application'
+ASGI_APPLICATION = 'mMoney.asgi.application'
 
 # Channels settings
 CHANNEL_LAYERS = {

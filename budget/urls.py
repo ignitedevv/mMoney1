@@ -23,6 +23,7 @@ urlpatterns = [
     # transactions
     path('transactions/', views.transactions, name='budget-transactions'),
     path('all_rec_payments/', views.rec_payments_all, name='rec-transactions'),
+    path('rec_payment/<str:id>', views.specific_payment, name='rec-payment'),
 
     # Budget
     path('budget', views.budget, name='budget-budget'),

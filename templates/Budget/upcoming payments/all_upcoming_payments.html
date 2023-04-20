@@ -85,7 +85,7 @@
                 <div id="w-node-_100b5761-faaa-e9fe-84e6-d94125e089e4-1e3cbc8f" class="div-block-14">
                   <h6 class="heading-12 notinmonth">16</h6>
                 </div>
-                <div id="w-node-cb854846-161e-02cd-b2db-159bc83020ef-1e3cbc8f" class="div-block-14 currentday">
+                <div id="w-node-cb854846-161e-02cd-b2db-159bc83020ef-1e3cbc8f" class="div-block-14 ">
                   <h6 class="heading-12 notinmonth">17</h6>
                 </div>
                 <div id="w-node-_76614887-e956-9ed7-8bb9-0dabb450d48b-1e3cbc8f" class="div-block-14">
@@ -205,6 +205,8 @@ var lastmonthdate = '{{ last_month_lastday }}'
 var currentmonthdate = '{{ current_date_lastday }}'
 console.log(currentmonthdate)
 var dayofweek = '{{ day_of_week }}'
+var current_day = '{{ current_day }}'
+console.log(current_day)
 
 days = {
     'Sunday': 0,
@@ -229,7 +231,13 @@ for (let i = day_value + 1; i < dateElements.length; i++) {
     dateElements[i].innerHTML = i - day_value
 }
 
+for (let i = 0; i < dateElements.length; i++) {
+    console.log(dateElements[i].innerHTML)
+    if(dateElements[i].innerHTML === (current_day)) {
 
+        dateElements[i].parentElement.className = 'div-block-14 currentday'
+    }
+}
 
 console.log(day_value)
 

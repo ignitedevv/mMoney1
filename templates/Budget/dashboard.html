@@ -205,10 +205,13 @@
 
                   {% for payment in sorted_recc_data %}
                       {% if payment.numdays %}
-                  <div id="w-node-_6ae10de7-db6d-4ce3-b569-2bd542d09be6-0cde150c" class="white-item upcoming-payment"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="92" id="w-node-_6c80b9b4-4b57-a761-643a-820a900a0ceb-0cde150c" alt="" class="image-8">
-                      <h1 class="_16px regular">{{ payment.merchant_name }}</h1>
-                      <h1 class="_16px payment-day">{{ payment.numdays }} days</h1>
-                </div>
+                        <a href="{% url 'Budget:rec-payment' payment.stream_id %}" style="text-decoration: none; color: green">
+                          <div id="w-node-_6ae10de7-db6d-4ce3-b569-2bd542d09be6-0cde150c" class="white-item upcoming-payment"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="92" id="w-node-_6c80b9b4-4b57-a761-643a-820a900a0ceb-0cde150c" alt="" class="image-8">
+                          <h1 class="_16px regular">{{ payment.merchant_name }}</h1>
+                          <h1 class="_16px payment-day">{{ payment.numdays }} days</h1>
+                        </div>
+                          </a>
+
                       {% endif %}
                 {% endfor %}
               </div>

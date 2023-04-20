@@ -77,6 +77,8 @@ def rec_payments_all(request):
     month = current_date.month - 1
     last_month = calendar.monthrange(year, month)[1]
     print(last_month)
+    current_day = current_date.day
+    print('current day: ', current_day)
 
 
     date_str = f'2023-{month}-{last_month}'
@@ -104,12 +106,17 @@ def rec_payments_all(request):
         'sorted_recc_data': sorted_recc_data,
         'day_of_week': day,
         'last_month_lastday': last_month,
-        'current_date_lastday': current_month
+        'current_date_lastday': current_month,
+        'current_day': current_day
 
     }
 
     return render(request, 'Budget/upcoming payments/all_upcoming_payments.html', context=context)
 
+def specific_payment(request, id):
+
+
+    return render(request, 'Budget/upcoming payments/specific_payment.html')
 
 
 
