@@ -27,7 +27,7 @@
       peer.on("open", (id) => {
         console.log("Peer ID:", id);
 
-        const socket = new WebSocket("wss://" + window.location.host + "/budget/video_call/");
+        const socket = new WebSocket("wss://" + window.location.host + "/ws/budget/video_call/");
         console.log("WebSocket URL:", socket);
 
         socket.addEventListener("open", (event) => {
