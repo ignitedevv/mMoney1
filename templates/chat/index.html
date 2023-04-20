@@ -28,6 +28,20 @@
         console.log("Peer ID:", id);
 
         const socket = new WebSocket("wss://" + window.location.host + "/budget/video_call/");
+        socket.addEventListener("message", (event) => {
+            const data = JSON.parse(event.data);
+
+            if (data.type === "offer") {
+                const call = peer.call(data.peerId, stream);
+                call.on("stream", (remoteStream) => {
+                    remoteVideo.srcObject = remoteStream;
+                });
+            } else if (data.type === "answer") {
+                // Handle answer message
+            } else if (data.type === "candidate") {
+                // Handle candidate message
+            }
+});
 
         socket.addEventListener("open", (event) => {
           console.log("WebSocket connection opened:", event);
@@ -57,6 +71,27 @@
     }).catch((error) => {
   console.error('Error accessing media devices:', error);
 });
+
+
+
+socket.addEventListener("message", (event) => {
+    const data = JSON.parse(event.data);
+
+    if (data.type === "offer") {
+        const call = peer.call(data.peerId, stream);
+        call.on("stream", (remoteStream) => {
+            remoteVideo.srcObject = remoteStream;
+        });
+    } else if (data.type === "answer") {
+        // Handle answer message
+    } else if (data.type === "candidate") {
+        // Handle candidate message
+    }
+});
+
+
+
+
   </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
-import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+import json
 
 class VideoCallConsumer(AsyncWebsocketConsumer):
     users = set()
@@ -13,7 +13,12 @@ class VideoCallConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         data = json.loads(text_data)
+
         if data["type"] == "join":
             for user in VideoCallConsumer.users:
                 if user != self:
                     await user.send(json.dumps({"type": "offer", "peerId": data["peerId"]}))
+        elif data["type"] in ["offer", "answer", "candidate"]:
+            for user in VideoCallConsumer.users:
+                if user != self:
+                    await user.send(text_data)
