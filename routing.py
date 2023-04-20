@@ -8,7 +8,7 @@ application = ProtocolTypeRouter(
         "http": get_asgi_application(),
         "websocket": URLRouter(
             [
-                path("ws/budget/video_call/", consumers.VideoCallConsumer.as_asgi()),
+                path("/ws/budget/video_call/", consumers.VideoCallConsumer.as_asgi()),
             ]
         ),
     }
