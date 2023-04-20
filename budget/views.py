@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 from .models import Account
 from .models import Goal, BudgetItems, BudgetUsers, BankAccount
@@ -6,7 +8,7 @@ import requests
 from .forms import UpdateChangedTransactions, AddBudgetForm
 import random
 from .plaid_integrations import plaid_get_Transactions, plaid_get_checking_account_balance, get_checking_accounts, plaid_get_accounts, plaid_get_rec_payments, plaid_updpate, get_savings_accounts, plaid_get_savings_account_balance
-from .plaid_integrations import get_investment_account_balances, plaid_get_investment_accounts
+from .plaid_integrations import get_investment_account_balances, plaid_get_investment_accounts, fetchBrand
 from .functions import package_transaction, add_month, days_to_date
 import datetime as dt
 from django.shortcuts import render, redirect
@@ -99,6 +101,12 @@ def rec_payments_all(request):
             date_str = add_month(f"{last_date}")
             days_remaining = days_to_date(date_str)
             data['numdays'] = days_remaining
+            try:
+                icon = fetchBrand(data['merchant_name'])
+                print(json.loads((icon))[0]['icon'])
+                data['icon'] = json.loads((icon))[0]['icon']
+            except:
+                pass
 
 
 
@@ -261,14 +269,13 @@ def budget_dashboard(request):
     budgets = BudgetItems.objects.filter(users_id=user_id)
 
 
-
+    print(fetchBrand('F1yr7Hu0CEYs61AYr8ZvIZBQkTBBA/XxeO3/xH09aUg='))
 
     # Collecting dates
     current_date = dt.date.today()
     start_date = str(current_date).split("-")
     start_date[1] = '01'
     start_date = '-'.join(start_date)
-    print(start_date)
 
 
     # receiving AJAX from changing a transaction category
@@ -288,16 +295,20 @@ def budget_dashboard(request):
     reccPayments = plaid_get_rec_payments(CLIENT_ID, SECRET, 'access-development-24934c76-5453-4288-912c-6ae4ab74cd55', accounts)['outflow_streams']
     sorted_recc_data = sorted(reccPayments, key=lambda x: dt.datetime.strptime(x['first_date'], '%Y-%m-%d'))
     for data in sorted_recc_data:
-        print(data['is_active'])
         if data['is_active'] == True:
             first_date = data['first_date']
             last_date = data['last_date']
             date_str = add_month(f"{last_date}")
             days_remaining = days_to_date(date_str)
-            print(f"It will take {days_remaining} days to get to {date_str}.")
             data['numdays'] = days_remaining
-            print(data)
-
+            try:
+                icon = fetchBrand(data['merchant_name'])
+                print(json.loads((icon))[0]['icon'])
+                data['icon'] = json.loads((icon))[0]['icon']
+            except:
+                pass
+    data = sorted_recc_data
+    sorted_lst = sorted(data,key=lambda x: x.get("numdays", float("inf")) if x.get("numdays", float("inf")) >= 0 else float("inf"))
 
     context = {
         'checking_accounts': checking_accounts,
@@ -309,7 +320,7 @@ def budget_dashboard(request):
         'investments': investments,
         'loans': loans,
         'real_estate': real_estate,
-        'sorted_recc_data': sorted_recc_data,
+        'sorted_recc_data': sorted_lst[:4],
         'goals': goals,
         'budgets': budgets
 
@@ -364,7 +375,7 @@ def transactions(request):
     current_date = dt.date.today()
 
     start_date = str(current_date).split("-")
-    start_date[1] = '01'
+    start_date[2] = '01'
     start_date = '-'.join(start_date)
     print(start_date)
 

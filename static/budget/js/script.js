@@ -53,6 +53,37 @@ function transactionsToggle(a, target) {
     console.log(element)
     console.log(target)
 
+    var allTransactions = document.getElementsByClassName('white-item transaction')
+
+    if(target === '1') {
+        console.log('it is 1')
+        for(let i = 0; i < allTransactions.length; i++) {
+            allTransactions[i].style.display = 'flex'
+        }
+    }
+
+    if(target === '2') {
+        console.log('it is 2')
+        for(let i = 0; i < allTransactions.length; i++) {
+            if(allTransactions[i].className === 'white-item transaction checked') {
+                console.log('checked')
+            } else {
+                allTransactions[i].style.display = 'none'
+            }
+        }
+    }
+
+    if(target === '3') {
+        console.log('it is 3')
+        for(let i = 0; i < allTransactions.length; i++) {
+           if(allTransactions[i].className !== 'white-item transaction checked') {
+               allTransactions[i].style.display = 'flex'
+            } else {
+               allTransactions[i].style.display = 'none'
+            }
+        }
+    }
+
 }
 
 

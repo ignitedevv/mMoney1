@@ -38,7 +38,7 @@
 
             {% for transaction in transaction_data %}
 
-              <div class="white-item transaction">
+              <div class="white-item transaction {% if transaction.checked == 'true' %}checked{% endif %}">
               <div class="left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="36" alt="">
                 <h1 class="transaction-title">{{ transaction.name }}</h1>
                 <h1 class="transaction-cost">+ ${{ transaction.amount }}</h1>
@@ -60,7 +60,7 @@
                     </select>
                 </div>
                 {% if transaction.checked == 'true' %}
-                    <img src="{% static 'budget/images/transaction-check@2x.png' %}" loading="lazy" width="41" alt="">
+                    <img src="{% static 'budget/images/transaction-check@2x.png' %}" loading="lazy" width="41" alt="" style="display: block;">
                 {% endif %}
               <h1 class="correct-button" onclick="sendTransaction(this, '{{ transaction.transaction_id }}', '{{ transaction.category.0 }}', '{{ transaction.category.1 }}')" style="display: none">Correct</h1>
               </div>

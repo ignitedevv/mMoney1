@@ -1,4 +1,6 @@
 import datetime
+import json
+
 import plaid
 import requests
 
@@ -53,6 +55,19 @@ def plaid_get_Transactions(CLIENT_ID, SECRET, token, start_date, end_date):
     return transaction_data
 
 
+
+
+def fetchBrand(brand):
+    headers = {
+        "accept": "application/json",
+        "Referer": "https://example.com/searchIntegrationPage"
+    }
+
+    url = f'https://api.brandfetch.io/v2/search/{brand}'
+
+    response = requests.get(url, headers=headers)
+
+    return response.text
 
 
 # Gets all account balances for a specific access token
@@ -165,13 +180,17 @@ def get_checking_accounts(CLIENT_ID, SECRET, token, start_date, end_date):
             subtype = account['subtype']
             int_id = balances['item']['institution_id']
             inst_name = get_institution(CLIENT_ID, SECRET, int_id)['institution']['name']
+            brand = fetchBrand(inst_name)
+            icon = (json.loads(brand)[0]['icon'])
             last_updated = datetime.datetime.now().time()
-            packaged_account = {'name': name, 'official_name': official_name, 'subtype': subtype, 'inst_name': inst_name, 'last_updated': f'{last_updated}', 'avaliable': avaliable}
+            packaged_account = {'name': name, 'official_name': official_name, 'subtype': subtype, 'inst_name': inst_name, 'last_updated': f'{last_updated}', 'avaliable': avaliable, 'icon': icon}
             checking_accounts_list.append(packaged_account)
             all_account_balances += int(avaliable)
 
 
     return checking_accounts_list
+
+
 
 
 # Gets and creates packaged list of all checking accounts with associated information
@@ -301,5 +320,4 @@ def plaid_get_rec_payments(CLIENT_ID, SECRET, token, ids_array):
     r = requests.post(url, headers=headers, json=data).json()
 
     return r
-
 

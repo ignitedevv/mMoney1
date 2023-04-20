@@ -166,7 +166,8 @@
           <div class="item-wrapper">
             <h1 class="item-title">Insights</h1>
             <div class="white-item"></div>
-          </div><img src="{% static 'images/add@2x.png' %}" loading="lazy" alt="" class="add">
+          </div>
+            <img src="{% static 'images/add@2x.png' %}" loading="lazy" alt="" class="add">
         </div>
         <div class="column-2 w-col w-col-8">
           <div class="item-wrapper">
@@ -175,7 +176,7 @@
             {% for rec in sorted_recc_data %}
                 {% if rec.numdays %}
               <div class="white-item recpaymentwrapper">
-              <div class="left-payment-wraptter"><img src="" loading="lazy" width="43" alt="" class="image-9">
+              <div class="left-payment-wraptter"><img src="{{ rec.icon }}" loading="lazy" width="43" alt="" class="image-9">
                 <div class="div-block-13">
                   <h1 class="_16px goal-title left">{{ rec.merchant_name }}</h1>
                   <h1 class="_16px left gray">{{ rec.numdays }} days away</h1>

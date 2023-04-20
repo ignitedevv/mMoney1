@@ -3,6 +3,56 @@
 {% load mathfilters %}
 {% load humanize %}
 {% block content %}
+
+
+
+<div class="full-page-wrapper" id="specific-payment-wrapper" style="z-index: 100000; display: none" >
+<div class="middle-container">
+  <div class="top-wrapper">
+    <div class="left-recc"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" id="rec-icon" class="image-11">
+      <div class="inner-left-rec">
+        <h1 class="recc-title" id="rec-title">Amazon Prime</h1>
+        <h1 class="recc-subtitle" id="rec_category">Heading</h1>
+      </div>
+    </div>
+    <div>
+      <h1 class="recc-type" id="rec-frequency">Heading</h1>
+    </div>
+  </div>
+  <div class="div-block-15">
+    <div>
+      <div class="w-layout-grid grid-4">
+        <div id="w-node-a1e0e8e4-435c-b498-92cc-9fe48b5793dd-5b300d33" class="left">
+              <div>
+                <h1 class="spent-this-year" >AVERAGE PAYMENT</h1>
+                <h1 class="spent-this-year number">$<span id="average-payment"> </span></h1>
+              </div>
+              <div class="div-block-16">
+                <h1 class="spent-this-year">SPENT THIS YEAR</h1>
+                <h1 class="spent-this-year number" id="spent-this-year">$25.13</h1>
+              </div>
+            </div>
+        <div id="w-node-_190f1d13-56c8-72df-a042-22d956c1c4f3-5b300d33" class="right">
+            <a href="#" class="button-3 manage w-button" style="margin-bottom: 10px">MANAGE SUBSCRIPTION</a>
+            <a href="#" class="button-3 remove w-button">Cancel Subscription</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="back-btn-wrapper">
+  <a href="#" onclick="backHide()" class="button-3 manage back w-button" id="recc-payment">Back</a>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
     <div class="my-section wf-section">
     <div class="my-container">
       <div class="w-row">
@@ -22,7 +72,7 @@
               <div class="specific-account-wrapper" style="display: none">
                 {% for account in checking_accounts %}
                   <div class="account-item-wrapper margin">
-                  <div class="item-left-div"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="29" alt="" class="accounts-img hidden">
+                  <div class="item-left-div"><img src="{{ account.icon }}" loading="lazy" width="29" alt="" class="accounts-img hidden">
                     <div class="div-block-9">
                       <h1 class="_16px _10-padding-left light">{{ account.name }}</h1>
                       <h1 class="_16px _10-padding-left light company">{{ account.inst_name }}</h1>
@@ -31,7 +81,7 @@
                   <div>
                     <div>
                       <h1 class="_16px amount-right">${{ account.avaliable|intcomma }}</h1>
-                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
+                      <h1 class="_16px _10-padding-left light company right updated auto">0 minutes</h1>
                     </div>
                   </div>
                 </div>
@@ -60,7 +110,7 @@
                   <div>
                     <div>
                       <h1 class="_16px amount-right">${{ account.avaliable|intcomma }}</h1>
-                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
+                      <h1 class="_16px _10-padding-left light company right updated auto">0 minutes</h1>
                     </div>
                   </div>
                 </div>
@@ -89,7 +139,7 @@
                   <div>
                     <div>
                       <h1 class="_16px amount-right">${{ account.balances.current|intcomma }}</h1>
-                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
+                      <h1 class="_16px _10-padding-left light company right updated auto">0 minutes</h1>
                     </div>
                   </div>
                 </div>
@@ -118,7 +168,7 @@
                   <div>
                     <div>
                       <h1 class="_16px amount-right">${{ account.avaliable|intcomma }}</h1>
-                      <h1 class="_16px _10-padding-left light company right updated">0 minutes</h1>
+                      <h1 class="_16px _10-padding-left light company right updated auto">0 minutes</h1>
                     </div>
                   </div>
                 </div>
@@ -155,13 +205,15 @@
               </div>
             </div>
 
-
           </div>
           <div class="white-item total">
             <h1 class="total-tag">Net Worth:</h1>
             <h1 class="account-totals">$25,151</h1>
           </div>
+            <img src="{% static 'images/add@2x.png' %}" loading="lazy" alt="" class="add">
+
         </div>
+
         <div class="column-2 w-col w-col-8">
           <div class="item-wrapper">
             <h1 class="item-title">Net Worth </h1>
@@ -172,26 +224,40 @@
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script>
-  const ctx = document.getElementById('myChart');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
+                  const ctx = document.getElementById('myChart');
+                  new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                      datasets: [{
+                        label: 'Income',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: '#11823B',
+                        borderWidth: 1
+                      },
+                      {
+                        label: 'Spending',
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          grid: {
+                            display: false
+                            }
+                        },
+                          x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                }
+                      }
+                    }
+                  });
+                </script>
               </div>
             </div>
           </div>
@@ -205,8 +271,8 @@
 
                   {% for payment in sorted_recc_data %}
                       {% if payment.numdays %}
-                        <a href="{% url 'Budget:rec-payment' payment.stream_id %}" style="text-decoration: none; color: green">
-                          <div id="w-node-_6ae10de7-db6d-4ce3-b569-2bd542d09be6-0cde150c" class="white-item upcoming-payment"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" width="92" id="w-node-_6c80b9b4-4b57-a761-643a-820a900a0ceb-0cde150c" alt="" class="image-8">
+                        <a style="text-decoration: none; color: green" onclick="upcomingPaymentsShow(this, '{{ payment.merchant_name }}', '{{ payment.category.0 }}', '{{ payment.last_amount.amount }}', '{{ payment.status }}', '{{ payment.frequency }}', '{{ payment.icon }}')">
+                          <div id="w-node-_6ae10de7-db6d-4ce3-b569-2bd542d09be6-0cde150c" class="white-item upcoming-payment"><img src="{{ payment.icon }}" loading="lazy" width="92" id="w-node-_6c80b9b4-4b57-a761-643a-820a900a0ceb-0cde150c" alt="" class="image-8">
                           <h1 class="_16px regular">{{ payment.merchant_name }}</h1>
                           <h1 class="_16px payment-day">{{ payment.numdays }} days</h1>
                         </div>
