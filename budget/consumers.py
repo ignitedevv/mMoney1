@@ -3,16 +3,20 @@ import json
 
 class VideoCallConsumer(AsyncWebsocketConsumer):
     users = set()
+    print('connect')
 
     async def connect(self):
         await self.accept()
         VideoCallConsumer.users.add(self)
+        print('connect')
 
     async def disconnect(self, close_code):
         VideoCallConsumer.users.remove(self)
+        print('connect')
 
     async def receive(self, text_data):
         data = json.loads(text_data)
+        print('connect')
 
         if data["type"] == "join":
             for user in VideoCallConsumer.users:
