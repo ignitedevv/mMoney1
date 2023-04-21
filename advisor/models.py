@@ -1,8 +1,18 @@
 from django.db import models
 
+# Code for chat room
+class RoomMember(models.Model):
+    name = models.CharField(max_length=200)
+    uid = models.CharField(max_length=1000)
+    room_name = models.CharField(max_length=200)
+    insession = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
 # Create your models here.
 class Advisor(models.Model):
-
     # basic information
     first_name = models.CharField(max_length=200, null=True, blank=True)
     last_name = models.CharField(max_length=200, null=True, blank=True)
@@ -19,8 +29,6 @@ class Advisor(models.Model):
     state = models.CharField(max_length=200, choices=STATE_CHOICES, null=True, blank=True)
     bio = models.CharField(max_length=200, null=True, blank=True)
     profile_photo = models.ImageField(upload_to='profileImage/')
-
-
 
     # licences
     health_insurance = models.BooleanField(null=True, blank=True)
@@ -52,16 +60,13 @@ class Advisor(models.Model):
         ("Marketing", "Marketing"),
         ("Supply Chain Management", "Supply Chain Management"),
         ("Talent Management", "Talent Management"),
-
-
-
     ]
     major = models.CharField(max_length=200, choices=STATE_CHOICES, null=True, blank=True)
     start_date = models.CharField(max_length=200, null=True, blank=True)
     end_date = models.CharField(max_length=200, null=True, blank=True)
 
-
     # interests / hobbies
     interest1 = models.CharField(max_length=200, null=True, blank=True)
     interest2 = models.CharField(max_length=200, null=True, blank=True)
     interest3 = models.CharField(max_length=200, null=True, blank=True)
+

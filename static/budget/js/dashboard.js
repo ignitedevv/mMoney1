@@ -14,13 +14,7 @@ setInterval(() => {
         var newe = (Number(elm.innerHTML.split(" ")[0]) + 1)
         elements[i].innerHTML = newe + ' ' + 'minutes'
 
-}
-
-
-
-
-
-}, 60000); // Update every minute (60000 milliseconds)
+}}, 60000); // Update every minute (60000 milliseconds)
 
 
 
